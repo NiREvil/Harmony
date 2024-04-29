@@ -1,4 +1,4 @@
-// @ts-nocheck  Last Update: Sunday, April 23, 2024
+// @ts-nocheck  Last Update: Sunday, April 29, 2024
 // Built a subscription link with the ability to automatically add CF clean IPs to VLESS configurations.
 // Replace these lines with your uuid and hostname, uuid line (54) - hostname lines (817-820) and (853-856) and (874-877)
 
@@ -21,7 +21,7 @@ function shufflEArray(array) {
     }
     return shuffled;
   }
-  
+  // jump tu line 47 my friend
   const defaultConfig1 = {
     "v": "2",
     "ps": "",
@@ -44,19 +44,19 @@ function shufflEArray(array) {
     "fp": ""
   };
   // چطور  یویو آی‌دی خودمونو بگیریم:
-  // با مراجعه به این سایت
-  //https://www.uuidgenerator.net/  و یا
-  // [در ویندوز] Press "Win + R", input "CMD" and run and paste this:  Powershell -NoExit -Command "[guid]::NewGuid()"
+  // از داخل یکی از کانفیگ‌هایی که قصد دارید برای آن لینک‌ساب بسازید و یا
+  // از داخل وورکر یا پیج کلادفلر که به منظور تولید کانفیگ‌های ویلس ایجاد کردید رفته و 
+  // و یویو آیدی آن را کپی و در لاین پنجاه و چهارم از این کد جایگذاری کنید
   const defaultConfigvless = {
     v: "2",
     ps: "",
     port: "443",
-    id: "664f5f11-1231-486d-b416-b7b3ecdae76a",
+    id: "1235b6fb-7f15-4361-8da3-d1a079bdf484",
     aid: "0",
     net: "ws",
     type: "none",
     host: "",
-    path: "/?ed=2560",
+    path: "/?ed=2560",// preferred path value, also can set "/?ed=2048"
     tls: "tls",
     sni: "",
   };
@@ -787,7 +787,7 @@ function shufflEArray(array) {
     ];
   
   
-    var port = [
+    var port = [// preferred port for 1st configs
       '8443',
         '2053',
     ];
@@ -806,18 +806,18 @@ function shufflEArray(array) {
         const shuffledVLESS = shuffleArray(Array.from(new Set(IP1)));
         const ip = shuffledVLESS.shift();
     
-        const config = { ...defaultConfigvless, add: ip, ps: '-%C2%BD%20Harmony', port: randomport };
+        const config = { ...defaultConfigvless, add: ip, ps: '-%C2%BD%20Harmony', port: randomport };// 1th set config profile name
       
         const queryParams = new URLSearchParams({
     
           path: config.path,
           security: config.tls,
           encryption: config.type,
-          alpn: 'http/1.1',
-          host: 'ARM32.BacheBiaPain.IR',
+          alpn: 'http/1.1',// preferred alpn type
+          host: 'armeabi-v7a.pages.dev',// replace your hostname -1
           fp: randomfp,
           type: config.net,
-          sni: 'ARM32.BacheBiaPain.IR',
+          sni: 'armeabi-v7a.pages.dev',// replace your hostname -2
         });
         const vlessUrl = `vless://${config.id}@${config.add}:${config.port}?${queryParams.toString()}#${config.ps}`;
         configsList.push(vlessUrl);
@@ -844,16 +844,16 @@ function shufflEArray(array) {
         if (uniqueIPsRE1.size >= 10) {
           break;
         }
-        const config = { ...defaultConfigvless, add: ip, ps: '-%C2%BC%20Harmony'};
+        const config = { ...defaultConfigvless, add: ip, ps: '-%C2%BC%20Harmony'};// 3th set config profile name
         const queryParams = new URLSearchParams({
           path: config.path,
           security: config.tls,
           encryption: config.type,
-          alpn: 'http/1.1',
-          host: 'ARMEABI-V7A.pages.DEV',
+          alpn: 'http/1.1',// preferred alpn type
+          host: 'armeabi-v7a.pages.dev',// replace your hostname -3
           fp: randomfp,
           type: config.net,
-          sni: 'ARMEABI-V7A.pages.DEV',
+          sni: 'armeabi-v7a.pages.dev',// replace your hostname -4
         });
         const vlessUrl = `vless://${config.id}@${config.add}:${config.port}?${queryParams.toString()}#${config.ps}`;
       if (!uniqueIPsRE1.has(ip)) {configsList.push(vlessUrl);
@@ -865,16 +865,16 @@ function shufflEArray(array) {
         if (uniqueIPsRE2.size >= 10) {
           break;
         }
-        const config = { ...defaultConfigvless, add: ip, ps: '-%E2%85%99%20Harmony'};
+        const config = { ...defaultConfigvless, add: ip, ps: '-%E2%85%99%20Harmony'};// 3th set config profile name
         const queryParams = new URLSearchParams({
           path: config.path,
           security: config.tls,
           encryption: config.type,
-          alpn: '',
-          host: 'ARMEABI-V7A.pages.DEV',
+          alpn: '',// preferred alpn type
+          host: 'armeabi-v7a.pages.dev',// replace your hostname -5
           fp: randomfp,
           type: config.net,
-          sni: 'ARMEABI-V7A.pages.DEV',
+          sni: 'armeabi-v7a.pages.dev',// replace your hostname -6
         });
         const vlessUrl = `vless://${config.id}@${config.add}:${config.port}?${queryParams.toString()}#${config.ps}`;
       if (!uniqueIPsRE2.has(ip)) {configsList.push(vlessUrl);
