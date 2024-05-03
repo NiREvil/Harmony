@@ -7,7 +7,7 @@ import { connect } from 'cloudflare:sockets';
 // https://www.uuidgenerator.net/
 let userID = 'cf943265-445a-4c81-9c2d-ffa4a4a16354';
 
-const proxyIPs = ['5.29.194.1'];// OR USE 'ni.radically.pro'  OR  'proxyip.nirevil.ir'  OR 'cdn-all.xn--b6gac.eu.org'
+const proxyIPs = ['ni.radically.pro'];// OR USE 'ni.radically.pro'  OR  'proxyip.nirevil.ir'  OR 'cdn-all.xn--b6gac.eu.org'
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 
 let dohURL = 'https://dns.adguard-dns.com/dns-query';// OR USE  https://sky.rethinkdns.com/1:-Pf_____9_8A_AMAIgE8kMABVDDmKOHTAKg= OR https://8.8.8.8/dns-query OR https://cloudflare-dns.com/dns-query
