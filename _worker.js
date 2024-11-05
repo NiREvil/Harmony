@@ -3,19 +3,15 @@
 
 import { connect } from 'cloudflare:sockets';
 
-// How to generate your own UUID:
-// https://www.uuidgenerator.net/
+// How to generate your own UUID: https://www.uuidgenerator.net/
 let userID = 'cf943265-445a-4c81-9c2d-ffa4a4a16354';
 
-const proxyIPs = ['ni.radically.pro'];// OR USE 'ni.radically.pro'  OR  'proxyip.nirevil.ir'  OR 'cdn-all.xn--b6gac.eu.org'
+const proxyIPs = ['bpb.radically.pro'];// OR USE 'proxyip..fxxk.dedyn.io' OR 'bpb.yousef.isegaro.com' OR 'ipdb.rr.nu'
 let proxyIP = proxyIPs[Math.floor(Math.random() * proxyIPs.length)];
 
-let dohURL = 'https://dns.adguard-dns.com/dns-query';// OR USE  https://sky.rethinkdns.com/1:-Pf_____9_8A_AMAIgE8kMABVDDmKOHTAKg= OR https://8.8.8.8/dns-query OR https://cloudflare-dns.com/dns-query
-
+let dohURL = 'https://sky.rethinkdns.com/1:-Pf_____9_8A_AMAIgE8kMABVDDmKOHTAKg=';// OR USE  https://dns.adguard-dns.com/dns-query OR https://8.8.8.8/dns-query OR https://cloudflare-dns.com/dns-query
 let nodeId = '';
-
 let apiToken = '';
-
 let apiHost = '';
 
 if (!isValidUUID(userID)) {
@@ -99,7 +95,7 @@ export default {
 						});
 					}
 					default:
-						url.hostname = 'piped.kavin.rocks';
+						url.hostname = 'www.speedtest.net';
 						url.protocol = 'https:';
 						request = new Request(url, request);
 						return await fetch(request);
@@ -744,8 +740,8 @@ async function handleUDPOutBound(webSocket, vlessResponseHeader, log) {
  * @returns {string}
  */
 function getVLESSConfig(userID, hostName) {
-  const wvlessws = `vless://${userID}@creativecommons.org:8880?encryption=none&security=none&type=ws&host=${hostName}&path=%2F%3Fed%3D2048#${hostName}`;
-  const pvlesswstls = `vless://${userID}@creativecommons.org:8443?encryption=none&security=tls&type=ws&host=${hostName}&sni=${hostName}&fp=random&path=%2F%3Fed%3D2560#${hostName}`;
+  const wvlessws = `vless://${userID}@creativecommons.org:80?encryption=none&security=none&type=ws&host=${hostName}&path=/?ed=2560#${hostName}`;
+  const pvlesswstls = `vless://${userID}@creativecommons.org:443?encryption=none&security=tls&type=ws&host=${hostName}&sni=${hostName}&fp=randomized&path=/?ed=2560#${hostName}`;
   
   if (hostName.includes('pages.dev')) {
     return `
@@ -766,7 +762,7 @@ ${pvlesswstls}
 用户ID(uuid)：${userID}
 传输协议(network)：ws 或者 websocket
 伪装域名(host)：${hostName}
-路径(path)：/?ed=2048
+路径(path)：/?ed=2560
 传输安全(TLS)：开启
 跳过证书验证(allowlnsecure)：false
 ################################################################
@@ -790,7 +786,7 @@ ${wvlessws}
 用户ID(uuid)：${userID}
 传输协议(network)：ws 或者 websocket
 伪装域名(host)：${hostName}
-路径(path)：/?ed=2048
+路径(path)：/?ed=2560
 ################################################################
 
 
@@ -823,7 +819,7 @@ ${wvlessws}
 用户ID(uuid)：${userID}
 传输协议(network)：ws 或者 websocket
 伪装域名(host)：${hostName}
-路径(path)：/?ed=2048
+路径(path)：/?ed=2560
 ################################################################
 
 ################################################################
@@ -840,7 +836,7 @@ ${pvlesswstls}
 用户ID(uuid)：${userID}
 传输协议(network)：ws 或者 websocket
 伪装域名(host)：${hostName}
-路径(path)：/?ed=2048
+路径(path)：/?ed=2560
 传输安全(TLS)：开启
 跳过证书验证(allowlnsecure)：false
 ################################################################
