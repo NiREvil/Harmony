@@ -20,5 +20,5 @@ jobs:
         uses: jaywcjlove/github-action-modify-file-content@main
         with:
           path: src/index.js
-          body: "version base on commit ${{ github.sha }}, Last update {{date:YYYY-MM-DD HH:mm:ss}} UTC - We are all REvil"
-          message: "Update version worker.js"
+          body: "Last update {{date:YYYY-MM-DD HH:mm:ss}} UTC - We are all REvil, Version base on commit ${{ github.sha }} "
+          message: "Update version _worker.js"
