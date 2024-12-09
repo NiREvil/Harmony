@@ -1,0 +1,24 @@
+name: Add Version Comment
+
+on:
+
+  push:
+    branches: [main]
+
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  version-comment:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Modify version worker-vless.js
+        uses: jaywcjlove/github-action-modify-file-content@main
+        with:
+          path: src/index.js
+          body: "version base on commit ${{ github.sha }}, Last update {{date:YYYY-MM-DD HH:mm:ss}} UTC - We are all REvil"
+          message: "Update version worker.js"
