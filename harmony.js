@@ -1,7 +1,7 @@
 /**
- * Last Update: 04:20 UTC - Saturday, 28 December 2024
+ * Last update: Monday, 30 December 2024, 11:59 PM UTC
  * - Built a v2ray subscription link with the ability to automatically add CF clean IPs to your VLESS configurations.
- * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (982) and also SNI in (931), (956) and (985) . Tamam ;)
+ * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (981) and also SNI in (931), (956) and (986) . Tamam ;)
  * We are all REvil 
  */
 
