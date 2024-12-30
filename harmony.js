@@ -14,7 +14,7 @@ const defaultConfigvless = {
     net: "ws",
     type: "none",
     host: "",
-    path: "/assets/images", // Preferred path
+    path: "/api/assets", // Preferred path
     tls: "tls",
     sni: "",
     ed: "2560", // Max Early Data, Default set is "2048"
@@ -23,7 +23,7 @@ const defaultConfigvless = {
 
 const fp = ['randomized', 'firefox', 'chrome', 'safari', 'android', 'randomized', 'firefox', 'chrome', 'ios']; // Preferred fingeprints
 
-const port = ['443', '8443', '2053']; // Preferred TLS Ports for 1st configs ex: ['443', '8443', '2053', '2083', '2087', '2096'];
+const port = ['8443', '2053']; // Preferred TLS Ports for 1st configs ex: ['443', '8443', '2053', '2083', '2087', '2096'];
 
 const IP1 = [ //Cloudflare clean IPv4/IPv6 address OR domains.
     '[::ffff:be5d:f6f1]',
@@ -849,7 +849,7 @@ const IP1 = [ //Cloudflare clean IPv4/IPv6 address OR domains.
     '188.114.99.101',
     '188.114.96.174',
     '188.114.97.57',
-    '188.114.96.132',
+    '188.114.98.98',
     '188.114.99.135',
     '188.114.97.24',
 
@@ -889,23 +889,23 @@ async function handleRequest(request) {
     const configsList = [];
 
     const shuffledVLESS = shuffleArray(Array.from(new Set(IP1)));
-    const ipv4urlRE1 = 'https://raw.githubusercontent.com/vfarid/cf-clean-ips/main/list.json'; // Second source of CF IP addresses.
-    const ipv4urlRE2 = 'https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json'; // Third source of CF IP addresses.
-
+    const ipv4urlRE1 = 'https://raw.githubusercontent.com/NiREvil/vless/refs/heads/main/Cloudflare-IPs.json'; // Second source of CF IP addresses.  
+    const ipv4urlRE2 = 'https://strawberry.victoriacross.ir'; // Third source of CF IP addresses.
+    
     const [ipv4listRE1, ipv4listRE2] = await Promise.all([
-        fetch(ipv4urlRE1),
-        fetch(ipv4urlRE2)
+      fetch(ipv4urlRE1),
+      fetch(ipv4urlRE2)
     ]);
-
+    
     const ipListDataRE1 = await ipv4listRE1.json();
     const ipListDataRE2 = await ipv4listRE2.json();
-
+    
     const ipv4ListRE1 = ipListDataRE1.ipv4 || [];
-    const ipv4ListRE2 = ipListDataRE2.ipv4 || [];
-
+    const ipv4ListRE2 = ipListDataRE2.data.map(item => item.ipv4) || [];
+      
     const ipListRE1 = ipv4ListRE1.map(ipData => ipData.ip);
-    const ipListRE2 = ipv4ListRE2.map(ipData => ipData.ip);
-
+    const ipListRE2 = ipv4ListRE2.filter(ip => ip); 
+    
     const shuffledIPListRE1 = shuffleArray(ipListRE1);
     const shuffledIPListRE2 = shuffleArray(ipListRE2);
 
@@ -924,7 +924,7 @@ async function handleRequest(request) {
             path: config.path,
             security: config.tls,
             encryption: config.type,
-            alpn: 'http/1.1', //Preferred alpn type
+            alpn: 'h3', //Preferred alpn type
             host: 'your-vless.pages.dev', // Set your Host here -1
             fp: randomfp,
             type: config.net,
