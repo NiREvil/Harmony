@@ -1,7 +1,7 @@
 /**
- * Last update: Monday, 30 December 2024, 11:59 PM UTC
+ * Last update: Tuesday, 31 December 2024, 11:59 PM
  * - Built a v2ray subscription link with the ability to automatically add CF clean IPs to your VLESS configurations.
- * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (981) and also SNI in (931), (956) and (986) . Tamam ;)
+ * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (981) and also SNI in (931), (956) and (984) . Tamam ;)
  * We are all REvil 
  */
 
@@ -14,18 +14,18 @@ const defaultConfigvless = {
     net: "ws",
     type: "none",
     host: "",
-    path: "/api/assets", // Preferred path
+    path: "/assets", // Preferred path
     tls: "tls",
     sni: "",
     ed: "2560", // Max Early Data, Default set is "2048"
     eh: "Sec-WebSocket-Protocol" // Early Data Header Name
 };
 
-const fp = ['randomized', 'firefox', 'chrome', 'safari', 'android', 'randomized', 'firefox', 'chrome', 'ios']; // Preferred fingeprints
+const fp = ['randomized', 'firefox', 'chrome', 'safari', 'android', 'randomized', 'firefox', 'chrome', 'ios']; // Preferred fingeprints, is better to use chrome, firefox, safari.
 
 const port = ['8443', '2053']; // Preferred TLS Ports for 1st configs ex: ['443', '8443', '2053', '2083', '2087', '2096'];
 
-const IP1 = [ //Cloudflare clean IPv4/IPv6 address OR domains.
+const IP1 = [ //1st source of cloudflare clean IPv4/IPv6 addresses.
     '[::ffff:be5d:f6f1]',
     '[::ffff:5fb3:83ef]',
     '[::ffff:8d0:1652]',
@@ -889,8 +889,8 @@ async function handleRequest(request) {
     const configsList = [];
 
     const shuffledVLESS = shuffleArray(Array.from(new Set(IP1)));
-    const ipv4urlRE1 = 'https://raw.githubusercontent.com/NiREvil/vless/refs/heads/main/Cloudflare-IPs.json'; // Second source of CF IP addresses.  
-    const ipv4urlRE2 = 'https://strawberry.victoriacross.ir'; // Third source of CF IP addresses.
+    const ipv4urlRE1 = 'https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json'; //Second source of Cloudflare clean IP addresses.  
+    const ipv4urlRE2 = 'https://strawberry.victoriacross.ir'; //3rd source of Cloudflare clean IP addresses.
     
     const [ipv4listRE1, ipv4listRE2] = await Promise.all([
       fetch(ipv4urlRE1),
@@ -924,7 +924,7 @@ async function handleRequest(request) {
             path: config.path,
             security: config.tls,
             encryption: config.type,
-            alpn: 'h3', //Preferred alpn type
+            alpn: 'h3', // Preferred alpn type
             host: 'your-vless.pages.dev', // Set your Host here -1
             fp: randomfp,
             type: config.net,
@@ -943,13 +943,13 @@ async function handleRequest(request) {
         const config = {
             ...defaultConfigvless,
             add: ip,
-            ps: 'HARMONY-2'
-        }; // Specify the 2nd set configs name
+            ps: 'HARMONY-2' // Specify the 2nd set configs name
+        }; 
         const queryParams = new URLSearchParams({
             path: config.path,
             security: config.tls,
             encryption: config.type,
-            alpn: 'http/1.1',
+            alpn: 'http/1.1', // Preferred alpn type
             host: 'your-vless.pages.dev', // Set your Host here -2
             fp: randomfp,
             type: config.net,
@@ -971,13 +971,13 @@ async function handleRequest(request) {
         const config = {
             ...defaultConfigvless,
             add: ip,
-            ps: 'HARMONY-3'
-        }; // Specify the 3rd set configs name
+            ps: 'HARMONY-3' // Specify the 3rd set configs name
+        }; 
         const queryParams = new URLSearchParams({
             path: config.path,
             security: config.tls,
             encryption: config.type,
-            alpn: 'http/1.1',
+            alpn: 'http/1.1', // Preferred alpn type
             host: 'your-vless.pages.dev', // Set your Host here -3
             fp: randomfp,
             type: config.net,
