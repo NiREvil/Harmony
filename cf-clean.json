@@ -1,6 +1,6 @@
 {
-    "last_update": "4:20 UTC - Wednesday, 13 November 2024",
-    "last_timestamp": 1731512474,
+    "last_update": "11:59 PM UTC - Monday, 31 December 2024",
+    "last_timestamp": 1735502160,
     "ipv4": [
       {
             "domain": "accessories.allsell.ir",
@@ -19,9 +19,9 @@
             "protocol_version": "TLSv1.3"
         },
         {
-            "domain": "tunnel.jsdhksjksdklsdjk.ir",
-            "ip": "172.67.132.5",
-            "ipv6": "2606:4700:3035::6815:470",
+            "domain": "nginx.nscl.ir",
+            "ip": "188.114.99.99",
+            "ipv6": "2606:4700:310c::ac42:2c39",
             "short_ipv6": "::ffff:ac43:845",
             "is_ir": true,
             "protocol_version": "TLSv1.3"
@@ -51,11 +51,11 @@
             "protocol_version": "TLSv1.3"
         },
         {
-            "domain": "panel.gilansaz.ir",
-            "ip": "188.114.97.3",
+            "domain": "nginx.xcs.workers.dev",
+            "ip": "188.114.99.99",
             "ipv6": "2a06:98c1:3120::3",
             "short_ipv6": "::ffff:bc72:613",
-            "is_ir": true,
+            "is_ir": false,
             "protocol_version": "TLSv1.3"
         },
         {
@@ -131,11 +131,11 @@
             "protocol_version": "TLSv1.3"
         },
         {
-            "domain": "snapptest-support.spchallenge.ir",
-            "ip": "188.114.97.3",
+            "domain": "harmony-427.pages.dev",
+            "ip": "188.114.98.98",
             "ipv6": "2a06:98c1:3120::3",
             "short_ipv6": "::ffff:bc72:613",
-            "is_ir": true,
+            "is_ir": false,
             "protocol_version": "TLSv1.3"
         },
         {
@@ -2155,8 +2155,8 @@
             "protocol_version": "TLSv1.3"
         },
         {
-            "domain": "bpb.nirevil.ir",
-            "ip": "188.114.97.3",
+            "domain": "sweet-november.pages.dev",
+            "ip": "188.114.96.96",
             "ipv6": "2a06:98c1:3120::3",
             "short_ipv6": "::ffff:bc72:613",
             "is_ir": true,
@@ -4731,11 +4731,11 @@
             "protocol_version": "TLSv1.3"
         },
         {
-            "domain": "keivani-architects.ir",
-            "ip": "172.67.165.85",
-            "ipv6": "2606:4700:3036::ac43:a555",
+            "domain": "sweet-november.pages.dev",
+            "ip": "188.114.97.97",
+            "ipv6": "2606:4700:310c::ac42:2c39",
             "short_ipv6": "::ffff:ac43:a555",
-            "is_ir": true,
+            "is_ir": false,
             "protocol_version": "TLSv1.3"
         },
         {
