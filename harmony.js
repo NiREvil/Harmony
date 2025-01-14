@@ -1,6 +1,6 @@
 /**
  * Last update: Tuesday, 31 December 2024, 11:59 PM
- * - Built a v2ray subscription link with the ability to automatically add CF clean IPs to your VLESS configurations.
+ * - The code dynamically creates VLESS configuration with clean IPs and returns subscription link in a base64 encoded format .
  * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (981) and also SNI in (931), (956) and (984) . Tamam ;)
  * We are all REvil 
  */
@@ -889,8 +889,8 @@ async function handleRequest(request) {
     const configsList = [];
 
     const shuffledVLESS = shuffleArray(Array.from(new Set(IP1)));
-    const ipv4urlRE1 = 'https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json'; //Second source of Cloudflare clean IP addresses.  
-    const ipv4urlRE2 = 'https://strawberry.victoriacross.ir'; //3rd source of Cloudflare clean IP addresses.
+    const ipv4urlRE1 = 'https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json'; // 2nd source of Cloudflare clean IP addresses.  
+    const ipv4urlRE2 = 'https://strawberry.victoriacross.ir'; // 3rd source of Cloudflare clean IP addresses.
     
     const [ipv4listRE1, ipv4listRE2] = await Promise.all([
       fetch(ipv4urlRE1),
@@ -925,7 +925,7 @@ async function handleRequest(request) {
             security: config.tls,
             encryption: config.type,
             alpn: 'h3', // Preferred alpn type
-            host: 'your-vless.pages.dev', // Set your Host here -1
+            host: 'your-vless.pages.dev', // Set your hostname here -1
             fp: randomfp,
             type: config.net,
             sni: 'YOUR-VlESS.PAGES.DEV', // Set your SNI here -1
@@ -950,7 +950,7 @@ async function handleRequest(request) {
             security: config.tls,
             encryption: config.type,
             alpn: 'http/1.1', // Preferred alpn type
-            host: 'your-vless.pages.dev', // Set your Host here -2
+            host: 'your-vless.pages.dev', // Set your hostname here -2
             fp: randomfp,
             type: config.net,
             sni: 'YOUR-VlESS.PAGES.DEV', // Set your SNI here -2
@@ -978,7 +978,7 @@ async function handleRequest(request) {
             security: config.tls,
             encryption: config.type,
             alpn: 'http/1.1', // Preferred alpn type
-            host: 'your-vless.pages.dev', // Set your Host here -3
+            host: 'your-vless.pages.dev', // Set your hostname here -3
             fp: randomfp,
             type: config.net,
             sni: 'YOUR-VlESS.PAGES.DEV', // Set your SNI here -3
