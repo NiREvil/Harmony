@@ -502,7 +502,7 @@ async function handleUDPOutBound(webSocket, streamResponseHeader, log) {
 function getDianaConfig(userCode, hostName) {
   const protocol = decodeSecure(ENCODED.PROTOCOL);
   const networkType = decodeSecure(ENCODED.NETWORK);
-	const baseUrl = `${protocol}://${userCode}@${hostName}:443`;
+  const baseUrl = `${protocol}://${userCode}@${hostName}:443`;
   const commonParams = `encryption=none&host=${hostName}&type=${networkType}` +
     `&security=tls&sni=${hostName}`;
   
@@ -548,13 +548,13 @@ ${networkType}-opts:
     headers:
     host: ${hostName}
 
-
 ⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑⁑
 ${atob('VEcgY2hhbm5lbDogaHR0cHM6Ly90Lm1lL3MvRl9OaVJFdmls')}        ⁂
 ${atob('U3JjIGNvZGU6IGh0dHBzOi8vZ2l0aHViLmNvbS9OaVJFdmlsL3ppemlmbg==')} ⁂
 **********************************************
 `;
 }
+
 
 /**
  * this is not real UUID validation
