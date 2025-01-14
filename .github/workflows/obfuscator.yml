@@ -1,4 +1,4 @@
-name: Obfuscate and Commit
+name: Obfs
 
 on:
   push:
@@ -12,14 +12,15 @@ jobs:
       contents: write
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
       - name: Use Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "16"
+          node-version: "20"
+          check-latest: false
 
       - name: Install dependencies
         run: npm install -g javascript-obfuscator
@@ -45,10 +46,8 @@ jobs:
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
           git add _worker.js
-          git commit -m "Obfuscate _worker.js" || echo "No changes to commit"
+          git commit -m "Secured and refined _worker.js logic" || echo "No changes to commit"
 
       - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          branch: ${{ github.ref }}
+        run: |
+          git push origin ${{ github.ref }}
