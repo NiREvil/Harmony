@@ -1,53 +1,67 @@
-name: Obfs
+name: Obfuscate and Version Update
 
 on:
   push:
     branches: [main]
+    paths:
+      - '**/index.*'
+      - '**/obfs.*'
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  obfuscate:
+  build_and_version:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout code
+        uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - name: Use Node.js
+      - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: "20"
-          check-latest: false
+          node-version: '20'
 
-      - name: Install dependencies
+      - name: Install javascript-obfuscator
         run: npm install -g javascript-obfuscator
 
-      - name: Obfuscate code
+      - name: Obfuscate index.js
         run: |
           javascript-obfuscator src/index.js --output _worker.js \
-          --compact true \
-          --control-flow-flattening true \
-          --control-flow-flattening-threshold 1 \
-          --dead-code-injection true \
-          --dead-code-injection-threshold 1 \
-          --identifier-names-generator hexadecimal \
-          --rename-globals true \
-          --string-array true \
-          --string-array-encoding 'rc4' \
-          --string-array-threshold 1 \
-          --transform-object-keys true \
-          --unicode-escape-sequence true
+            --compact true \
+            --control-flow-flattening true \
+            --control-flow-flattening-threshold 1 \
+            --dead-code-injection true \
+            --dead-code-injection-threshold 1 \
+            --identifier-names-generator hexadecimal \
+            --rename-globals false \
+            --string-array true \
+            --string-array-encoding 'rc4' \
+            --string-array-threshold 1 \
+            --transform-object-keys true \
+            --unicode-escape-sequence true
 
-      - name: Commit changes
+      - name: Add multiline version comment to _worker.js
         run: |
-          git config --local user.email "github-actions[bot]@users.noreply.github.com"
-          git config --local user.name "github-actions[bot]"
+          if [ -s _worker.js ]; then
+            VERSION_BLOCK="/*\n * Last update: $(date -u '+%Y-%m-%d %H:%M:%S') UTC\n * We are all REvil - version based on commit ${{ github.sha }}\n */"
+            {
+              printf '%b\n\n' "$VERSION_BLOCK"
+              cat _worker.js
+            } > _worker_temp.js
+            mv _worker_temp.js _worker.js
+          else
+            echo "⚠️ _worker.js is missing or empty. Skipping version comment insertion."
+          fi
+
+      - name: Commit and push changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add _worker.js
-          git commit -m "Secured and refined _worker.js logic" || echo "No changes to commit"
-
-      - name: Push changes
-        run: |
+          git commit -m "Automated build: obfuscation and version update" -m "Based on commit ${{ github.sha }}" || echo "No changes to commit."
           git push origin ${{ github.ref }}
