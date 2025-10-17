@@ -1,5 +1,5 @@
 /**
- * Last update: Tuesday, 31 December 2024, 11:59 PM
+ * Last update: 18 October, 2025 — 4:20 AM
  * - The code dynamically creates VLESS configuration with clean IPs and returns subscription link in a base64 encoded format .
  * - Replace these lines with your uuid and hostname, UUID in line (12) - Hostname in lines (928), (953) and (981) and also SNI in (931), (956) and (984) . Tamam ;)
  * We are all REvil
