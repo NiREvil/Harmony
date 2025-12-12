@@ -1,11 +1,11 @@
 name: Obfuscate and Version Update
 
 on:
-  push:
-    branches: [main]
-    paths:
-      - '**/index.*'
-      - '**/obfs.*'
+#  push:
+#    branches: [main]
+#    paths:
+#      - '**/index.*'
+#      - '**/obfs.*'
   workflow_dispatch:
 
 permissions:
@@ -13,7 +13,7 @@ permissions:
 
 jobs:
   build_and_version:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
@@ -29,26 +29,24 @@ jobs:
       - name: Install javascript-obfuscator
         run: npm install -g javascript-obfuscator
 
-      - name: Obfuscate index.js
+      - name: Gentle obfuscation of index.js
         run: |
           javascript-obfuscator src/index.js --output _worker.js \
             --compact true \
-            --control-flow-flattening true \
-            --control-flow-flattening-threshold 1 \
-            --dead-code-injection true \
-            --dead-code-injection-threshold 1 \
-            --identifier-names-generator hexadecimal \
+            --control-flow-flattening false \
+            --dead-code-injection false \
+            --identifier-names-generator mangled \
             --rename-globals false \
-            --string-array true \
-            --string-array-encoding 'rc4' \
-            --string-array-threshold 1 \
-            --transform-object-keys true \
-            --unicode-escape-sequence true
+            --string-array false \
+            --transform-object-keys false \
+            --unicode-escape-sequence false \
+            --disable-console-output false \
+            --self-defending false
 
-      - name: Add multiline version comment to _worker.js
+      - name: Add mulìtiline version comment to _worker.js
         run: |
           if [ -s _worker.js ]; then
-            VERSION_BLOCK="/*\n * Last update: $(date -u '+%Y-%m-%d %H:%M:%S') UTC\n * We are all REvil - version based on commit ${{ github.sha }}\n */"
+            VERSION_BLOCK="// <!--GAMFC-->version base on commit: ${{ github.sha }} - last update: $(date -u '+%Y-%m-%d %H:%M:%S') UTC <!--GAMFC-END-->."
             {
               printf '%b\n\n' "$VERSION_BLOCK"
               cat _worker.js
@@ -60,8 +58,9 @@ jobs:
 
       - name: Commit and push changes
         run: |
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
+          git config --local user.name "NET-Sentinel Bot"
+          git config --local user.email "224584266+NetSentinel-Bot@users.noreply.github.com"
           git add _worker.js
-          git commit -m "Automated build: obfuscation and version update" -m "Based on commit ${{ github.sha }}" || echo "No changes to commit."
+          git commit -m "build: compact bundle and insert version metadata" -m "Based on commit ${{ github.sha }}" || echo "No changes to commit."
           git push origin ${{ github.ref }}
+    
