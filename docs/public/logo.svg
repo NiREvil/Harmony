@@ -1,0 +1,35 @@
+<svg width="512" height="256" viewBox="0 0 512 256" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <style>
+      .gold { fill: #d4a62a; }
+    </style>
+  </defs>
+
+  <!-- Transparent background -->
+  <rect width="512" height="256" fill="none"/>
+
+  <!-- Big H (intentional asymmetry) -->
+
+  <!-- Left leg (full height) -->
+  <rect class="gold" x="40" y="40" width="60" height="176"/>
+
+  <!-- Right leg (shorter on bottom to fit ARMONY) -->
+  <rect class="gold" x="180" y="40" width="60" height="120"/>
+
+  <!-- Middle bar -->
+  <rect class="gold" x="100" y="120" width="80" height="40"/>
+
+  <!-- ARMONY text (slightly spaced from H) -->
+  <g class="gold" transform="translate(192,190)">
+    <text x="-10" y="10"
+          font-size="48"
+          font-weight="600"
+          font-family="Arial, Helvetica, sans-serif"
+          letter-spacing="4">
+      ARMONY
+    </text>
+
+    <!-- underline (closer to text) -->
+    <rect x="-10" y="16" width="200" height="4"/>
+  </g>
+</svg>
