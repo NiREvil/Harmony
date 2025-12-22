@@ -3,6 +3,31 @@
  * https://github.com/vuejs/vitepress/blob/main/src/client/theme-default/styles/vars.css
  */
 
+:root:where(:lang(fa)) {
+  --vp-font-family-base:
+    'Vazirmatn', 'Inter', ui-sans-serif, system-ui, sans-serif,
+    'Apple Color Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+}
+
+.VPHero .VPImage {
+  filter: drop-shadow(-2px 4px 6px rgba(0, 0, 0, 0.2));
+  padding: 18px;
+}
+
+img[src='/search.png'] {
+  width: 100%;
+  aspect-ratio: 1 / 1;
+}
+
+  font-size: 2rem;
+  opacity: 0.9;
+}
+
+.viewer-no img {
+  pointer-events: none;
+}
+
+
 /**
  * Colors
  *
