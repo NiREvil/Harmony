@@ -1,0 +1,27 @@
+# Dependency directories
+**/node_modules/
+package-lock.json
+yarn.lock
+
+
+# VitePress build outputs
+docs/.vitepress/cache
+docs/.vitepress/dist
+**/dist
+**/cache
+
+
+# IDE config files
+.vscode/
+.idea/
+.nojekyll
+
+
+# System files
+.DS_Store
+Thumbs.db
+
+
+# Environment files
+.env
+.env.local

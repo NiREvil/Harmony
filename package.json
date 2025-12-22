@@ -1,0 +1,34 @@
+{
+  "name": "Harmony",
+  "version": "0.0.0",
+  "description": "A sophisticated Cloudflare Workers-based proxy solution designed for seamless network traffic management and VLESS protocol implementation.",
+  "scripts": {
+    "dev": "vitepress dev docs",
+    "build": "vitepress build docs",
+    "preview": "vitepress preview docs"
+  },
+  "keywords": [
+    "v2ray subscription",
+    "vless",
+    "xray"
+  ],
+  "author": "Diana",
+  "license": "ISC",
+  "type": "module",
+  "devDependencies": {
+    "@nolebase/vitepress-plugin-inline-link-preview": "^2.18.2",
+    "markdown-it-attrs": "^4.1.6",
+    "markdown-it-footnote": "^4.0.0",
+    "markdown-it-mathjax3": "^4.3.2",
+    "vitepress": "^1.6.3",
+    "vitepress-plugin-image-viewer": "^1.1.6",
+    "vitepress-plugin-mermaid": "^2.0.16",
+    "vitepress-plugin-tabs": "^0.7.1",
+    "vue": "^3.4.27"
+  },
+  "dependencies": {
+    "video.js": "^8.23.3",
+    "viewerjs": "^1.11.6"
+  }
+}
+
