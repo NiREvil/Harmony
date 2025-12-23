@@ -1,95 +1,220 @@
 # هارمونی
 
-**ساخت لینک ساب با قابلیت افزودن خودکار آی‌پی تمیز کلادفلر برای کانفیگ‌های VLESS**
+[![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=plastic&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/NiREvil/Harmony)
 
-> **متن ارائه شده به عنوان دستورالعمل پیکربندی `CloudFlare Workers` ارائه می‌شود. فرض بر این است که مخاطب از دانش فنی لازم برخوردار است.**
 
-## دستورالعمل پیکربندی
+**ساخت لینک ساب با قابلیت افزودن خودکار آی‌پی تمیز کلادفلر و پارامترهای ثابت و متغیر برای کانفیگ‌های VLESS در جهت بهبود وضعیت دسترسی به اینترنت آزاد**
+
+> **متن ارائه شده به عنوان دستورالعمل پیکربندی `CloudFlare Workers—Pages` ارائه می‌شود.  
+> فرض بر این است که مخاطب از دانش فنی لازم برخوردار است.**
+
+
+# دستورالعمل پیکربندی
 
 از هر کد وورکر که تمایل دارید برای ساخت یک کانفیگ `Vless` استفاده کنید. برای ما دو عنصر کلیدی در این پروسه فقط `UUID` و `hostname` کانفیگ هستند.
 
 ### 1. ایجاد کانفیگ Vless
 
-من برای مثال از این وورکر ساده و قدیمی برای ساخت کانفیگ VLESS استفاده کردم [کد وورکر](_worker.js).
+من برای مثال از کد وورکر zizifn نسخه بهینه و ارتقاء یافته‌ی REvil برای ساخت کانفیگ VLESS استفاده کردم:
+
+[کد فشرده‌ی وورکر](_worker.js).
+[کد نرمال وورکر](src/index.js)
 
 > [!NOTE]
+> 
 > اگر کانفیگ ندارید و تاکنون وورکر نساخته‌اید، توضیحات پیرامون ساخت کانفیگ را بخوانید. در غیر این صورت، این قسمت را نادیده گرفته و آموزش را ادامه دهید.
+
+<br/>
 
 <details>
 <summary>توضیحات پیرامون ساخت کانفیگ</summary>
 
 افرادی که کانفیگ ندارند و تاکنون وورکری نساخته‌اند، می‌توانند به دو روش این کار را انجام دهند:
 
-**از طریق Cloudflare Workers**
+### از طریق Workers (پیشنهادی)
+کپی و پست مستقیم (سریع‌ترین روش)
 
-می‌توانید از [فایل worker.js](_worker.js) برای ساخت وورکر و ایجاد کانفیگ استفاده کنید.
+**این روش برای تست سریع و بدون نیاز به گیت‌هاب مناسب است.**
+
+1. ورود به کلادفلر: وارد داشبورد Cloudflare شوید.
+
+2. ساخت ورکر: در نوار ابزار بالای سایت روی "Add" یا در موبایل روی آیکون "+" کلیک کرده سپس "workers" را انتخاب کنید.
+  
+3. روی دکمه Get Start مقابل "Start with Hello World!" کلیک کرده و سپس یک نام دلخواه برای ورکر خود انتخاب کنید. سپس Deploy را بزنید.  
+
+4. کپی کد: پس از اتمام مرحله ساخت وورکر روی گزینه Edit code کلیک کرده و سپس محتویات یکی از فایل‌های زیر را کپی کنید. (هیو تفاوتی ندارن)
+
+- [کد فشرده‌ی وورکر](_worker.js).
+
+- [کد نرماا وورکر](./_worker.js)
+
+5. پس از عمل کپی؛ قطعه کد پیش‌فرض در صفحه ویرایش‌گر را حذف و کد خود را به‌طور کامل در آن جایگذاری کنید و سپس برای اعمال تغییرات انجام شده، از گوشه سمت راست روی گزینه آبی رنگ `Deploy` کلیک کنید.
+
+<br/>
+
+### از طریق Pages
+
+> این روش موقتا توصیه نمی‌شود به دلیل فیلتر شدن دامنه‌های `pages.dev` در کشور ایران، ترجیحا از روش worker پیش برید هنوز دامنه‌ی `workers.dev` عالی کار می‌کنه.
+
+به‌ هر حال  
+این روش به شما اجازه می‌دهد از فایل کد پروژه را برای دپلوی در Cloudflare Pages (بدون اتصال به اکانت گیت‌هاب) استفاده کنید.  
+
+1. فایل [_worker.js—](./_worker.js) را از همین مخزن دانلود کنید.
+ 
+2. در کلادفلر، به بخش Pages بروید.  
+
+3. در تب Pages روی دکمه Get Start مقابلDrag and drop your files کلیک کنید.
+
+4. برای پروژه خود یک نام انتخاب کرده و سپس فایل _worker.js را آپلود کنید تا پروسه دپلوی آغاز شود.
+
+ <br/> 
+
+## از طریق Fork مخزن 
+ساخت worker یا pages از طریق فورک و کلون کردن این مخزن و اتصال آن به کلادفلر
+ 
+این ساده‌ترین روش برای مدیریت و بروزرسانی‌های آینده است.
+
+1. **کپی کردن پروژه:** ابتدا این مخزن (Repository) را در اکانت گیت‌هاب خود Fork کنید.
+
+2. **ورود به کلادفلر:** وارد داشبورد Cloudflare خود شوید.  
+
+3. **ساخت پروژه:** در نوار ابزار بالای سایت روی "Add" یا در موبایل روی آیکون "+" کلیک کرده سپس "Pages" را انتخاب کنید. همچنین می‌توان از منوی سمت چپ از بخش Build و سپس سپس Compute & Ai به بخش worker & Pages دست یافت.  
+
+4. در صفحه جدید گزینه "Import an existing Git repository" را انتخاب کنید.  
+
+5. اول اگر به اکانت خود متصل نبودید "Connect to Git" را بزنید.
+
+6. **انتخاب مخزن:** مخزن فورک شده خود را انتخاب کنید و Begin setup را بزنید.
+
+#### نکته
+می‌تونید دقیقا عین همین روش رو برای وورکر پیاده کنید، چون الان دامین  `pages.dev` فیلتر شده پس ساختن pages بدون داشتن دامنه‌ی شخصی بی‌فایده‌است، توصیه می‌کنم فورک بزنید مخزن رو، از داخل کلادفلر ساخت وورکر رو انتخاب کنید و سپس گزینه اتصال به اکانت گیت‌هاب رو انتخاب کرده و روی اسم مخزن فورک شده داخل لیست کلیک کنید و ...
+
+<br/>
+  
+### تنظیمات دپلوی
+
+ ‏**Project name:** یک نام دلخواه برای پروژه‌تان انتخاب کنید.  
+ 
+  ‏**Production branch:** شاخه main را انتخاب کنید.  
+  
+   ‏**Framework preset:** گزینه None را انتخاب کنید.  
+
+**ذخیره و دپلوی:** روی Save and Deploy کلیک کنید. پروژه شما در چند ثانیه دپلوی خواهد شد!  
+
+همچنین می‌توان از دکمه زیر برای دپلوی مستقیم pages استفاده کرد. (فقط اسم انتخاب می‌کنید)
+
+
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/NiREvil/zizifn)
+
+<br/> 
 
 ---
 
-**از طریق Cloudflare Pages**
+### تنظیمات و متغیرها
 
-> این روش توصیه می‌شود چون روش بالا به دلیل سختگیری‌های اخیر کلادفلر ممکن است هنگام ساخت وورکر با خطا روبرو شوید‌.
-برای ساخت کانفیگ از طریق Pages، کافی است این مخزن را فورک کرده و از داخل اکانت کلادفلر خود یک پیج جدید ایجاد کنید. حتماً از این وب‌سایت [^1] یک آی‌دی جدید گرفته و موقع ساخت پیج در قسمت `environment variables` یک متغیر جدید ایجاد کرده و نام آن را `UUID` و مقدارش را برابر با آی‌دی که از سایت گرفتید قرار دهید.
+بعد از راه‌اندازی، باید متغیرهای محیطی (Environment Variables) را برای شخصی‌سازی کانفیگ‌های خود تنظیم کنید. این متغیرها را در داشبورد پروژه خود در کلادفلر، در مسیر زیر اضافه کنید:
 
-مراحل ساخت پیج را ادامه دهید تا انتها. در نهایت، پس از اتمام ساخت، از تب Deployment روی لینک پیج خود که در مقابل Domains نوشته شده کلیک کنید. بعد در نوار آدرس مرورگر یک `/` اضافه کرده و در ادامه UUID خود را قرار دهید، به این شکل: `https://xxxx.pages.dev/yourUUID`.
+> worker & Pages > Settings > Variables and Secrets > Add variable.
 
-در این مرحله در صفحه‌ای که باز می‌شود، می‌توانید کانفیگ Vless آماده خود را کپی و داخل کلاینت دلخواه وارد کنید. ولی ما اینجا فقط Hostname و UUID را کپی می‌کنیم و می‌رویم برای ادامه آموزش ساخت لینک ساب.
+<br/> 
+
+| **متغیر** | **توضیحات** | **الزامی - اختیاری** | *مقدار پیش‌فرض** |
+|:---|:-----------|:---:|:----------|
+| UUID | شناسه کاربری منحصر به فرد شما. این متغیر برای امنیت ضروری است. | الزامی | برای ساخت، به [UUID Generator][2] مراجعه کنید. |
+| PROXYIP | یک IP یا دامنه برای fronting. این آدرس به عنوان آی‌پی جایگزین موقع بازدید از وب‌سایت و سرویس‌های پشت کلادفلر مانند speedtest و whoer استفاده می‌شود. از [مخزن پروکسی آی‌پی][3] ما پیشنهادی یک مورد را انتخاب کنید. | اختیاری | مقدار پیشفرض: `nima.nscl.ir` هفتاد پروکسی آمریکا از بهترین ارائه دهنده‌ها  |
+| SCAMALYTICS_USERNAME | نام کاربری سرویس Scamalytics برای تحلیل IP. | اختیاری | برای مصرف شخصی نیاز نیست. در صورت استفاده عمومی و فورک‌های زیاد، از سایت [Scamalytics][4] درخواست API شخصی بدهید. در عرض ۲۴ ساعت اطلاعات سرویس ایمیل می‌شود. |
+| SCAMALYTICS_API_KEY | کلید API سرویس Scamalytics. | اختیاری | همراه با نام کاربری از سایت Scamalytics دریافت می‌شود. |
+| SCAMALYTICS_BASEURL | اندپوینت سرویس Scamalytics. | اختیاری | همراه با نام کاربری و api برای شما ایمیل میشود.  |
+
+<br/> 
+
+### نحوه استفاده
+
+**دسترسی به پنل مدیریت**
+
+پس اتمام پروسه دپلوی؛ کافیست UUID خود را به انتهای آدرس ورکر یا پیج خود اضافه کنید:
+
+`https://<Your-Worker-URL>/<Your-UUID>`
+
+برای مثال:
+
+`https://index.forexample.workers.dev/2210f3f0-513d-4d17-9ce2-c094d2f54580`
 
 </details>
 
-### 2. ویرایش اسکریپت
+<br/> 
 
-- **2.1 دانلود اسکریپت**
+## 2. شخصی‌سازی اسکریپت
 
-  ابتدا اسکریپت هارمونی را کپی یا دانلود کنید. [^2]
+### دانلود اسکریپت
+ابتدا اسکریپت هارمونی را کپی یا دانلود کنید. [^2]  
+[Harmony.js](./harmony.js)
 
-  این اسکریپت را می‌توان توسط [^3] Notepad++ در ویندوز یا ابزارهای مدیریت فایل مانند [^4] MT Manager در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلادفلر ایجاد کرده و این کد را داخل آن جایگذاری و سپس اقدام به ویرایش آن کنید.
+این اسکریپت را می‌توان توسط [^3] Notepad++ در ویندوز یا ابزارهای مدیریت فایل مانند [^4] MT Manager در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلادفلر ایجاد کرده و این کد را داخل آن جایگذاری و سپس اقدام به ویرایش آن کنید.
 
-- **2.2 ویرایش UUID**
+### ویرایش UUID
 
-  در ابتدای کد، `UUID` پیش‌فرض در لاین `12` را با UUID خود از داخل وورکر یا پیج خود یا از داخل یکی از کانفیگ‌های ساخته شده خودتان جایگزین کنید.
+در ابتدای کد، `UUID` پیش‌فرض در لاین `32` را با UUID خود (از داخل یکی از کانفیگ‌هایی که از قبل یا تازه ساختید) جایگزین کنید.  
 
-- **2.3 ویرایش Hostname و SNI**
+### ویرایش HostName
 
-  در این مرحله از ویرایش کد، باید `3` مرتبه `hostname` پیش‌فرض را در لاین‌های `(928)`، `(953)` و `(982)` را با هاست‌نیم کانفیگ خود (مانند UUID) و همچنین `3` مرتبه `SNI` پیش‌فرض در لاین‌های `(931)`، `(956)` و `(984)` را با SNI کانفیگ خود جایگزین کنید. SNI در کانفیگ‌هایی که با وورکر یا پیج ساخته می‌شوند عموماً برابر با Hostname می‌باشد.
+در این مرحله از ویرایش کد، باید ادرس هایت کانفیگ خود را با `hostname` پیش‌فرض را کد در سه بخش مختلف جایگزین کنید. 
 
-- **2.4 ذخیره کد ویرایش شده**
+- دسته‌ی اول کانفیگ‌های TLS
+  - Host: line 55
+  - SNI: line 56
 
-  در نهایت کد ویرایش شده را ذخیره کنید.
+ - دسته دوم کانفیگ‌های TCP
+   - Host: line 69
+   - SNI: line 70
+  
+- دسته سوم کانفیگ‌های اضطراری
+  - Host: line 83
+  - SNI: line 84
+ 
 
-### 3. ایجاد یک Worker در CloudFlare
+**نکته**  
+در کانفیگ‌هایی که با وورکر یا پیج به میزبانی کلادفلر ساخته می‌شوند پارامتر SNI همان Hostname می‌باشد.
 
-1. به حساب CloudFlare خود وارد شوید.
-2. به بخش `Workers and Pages` بروید.
-3. یک Worker جدید ایجاد کنید.
+### ذخیره کد
 
-> Cloudflare account > workers and pages > new application > create worker > rename > deploy.
+در نهایت کد ویرایش شده را ذخیره کنید.
 
-4. سپس روی گزینه `Edit Worker` کلیک کنید.
 
-### 4. وارد کردن اسکریپت در ویرایشگر وورکر
+## 3. ساخت Worker 
 
-قطعه کد پیش‌فرض در صفحه ادیتور را به طور کامل حذف کرده و کد خود را در آن جایگذاری کنید و سپس برای اعمال تغییرات از گوشه سمت راست روی گزینه `Deploy` کلیک کنید.
+1. وارد داشبورد حساب Cloudflare شوید.
+
+2. در نوار ابزار بالای سایت روی آیکون "Add" (در موبایل آیکون "+") کلیک کرده سپس "Workers" را انتخاب کنید.
+
+3. روی گزینه Get Start در مقابل "Start with Hello World!" کلیک کرده و سپس یک نام دلخواه برای ورکر خود انتخاب کنید. سپس Deploy را بزنید.
+
+4. پس از اتمام ساخت وورکر روی Edit code کلیک کنید.
+
+5. قطعه کد پیش‌فرض در صفحه ویرایش‌گر را حذف و کد خود را به‌طور کامل در آن جایگذاری کنید و سپس برای اعمال تغییرات انجام شده، از گوشه سمت راست روی گزینه آبی رنگ `Deploy` کلیک کنید.
+
 
 > [!TIP]
-> برای بهم نریختن قالب‌بندی کد، لطفاً از کلیدهای `ctrl+c` برای کپی کد و `ctrl+v` برای جایگذاری در ویندوز استفاده کنید. در موبایل می‌توان فایل js را درون وورکر آپلود کرد.
+> 
+> برای جلوگیری از بهم ریختگی ساختار کد یا جایگزاری ناقص؛ لطفاً از کلیدهای ترکیبی `ctrl+c` برای کپی و `ctrl+v` برای جایگذاری در دسکتاپ استفاده کنید. در موبایل می‌توان فایل js را درون وورکر آپلود کرد. و یا از Hackers keyboard کمک گرفت. 
 
-### 5. دریافت لینک اشتراک
+## 5. دریافت لینک اشتراک
 
-پس از deploy شدن worker، در همان محیط با کلیک بر روی گزینه `worker.dev` لینک وورکر را در تب جدید مشاهده خواهید کرد. کانفیگ‌ها در فرمت base64 هستند.
+پس از deploy شدن worker، در همان محیط ویرایشگر با کلیک بر روی گزینه `Visit` یک تب جدید باز شده چ کانفیگ‌های خود را در فرمت base64 مشاهده کنید.
 
-از بخش آدرس بار مرورگر لینک آدرس را کپی کرده و از آن به عنوان لینک ساب در کلاینت دلخواه خود استفاده کنید. در تمام کلاینت‌های ویتوری می‌توان آن را اضافه کرد.
+از بخش آدرس بار مرورگر لینک آدرس را کپی کرده و از آن به عنوان لینک ساب در کلاینت دلخواه خود استفاده کنید. در تمام کلاینت‌های با هسته سینگ‌باکس و Xray می‌توان آنرا وارد کرد.
 
 این URL به عنوان لینک اشتراک شما عمل خواهد کرد.
 
-### 6. به‌روزرسانی لینک اشتراک
+## 6. به‌روزرسانی لینک اشتراک
 
 بر روی دکمه `به‌روزرسانی اشتراک` - `Update Subscriptions` داخل کلاینت کلیک کنید.
 
 با هربار انجام این عمل، 30 عدد کانفیگ جدید با IP های تمیز به کلاینت شما اضافه خواهد شد.
 
 > [!CAUTION]
-> برای رسیدن به شخصی‌سازی بیشتر، لطفاً توضیحات زیر را بخوانید.
+> 
+> برای شخصی‌سازی بیشتر، لطفاً توضیحات زیر را بخوانید.
 
 ## توضیحات غیر ضروری
 
@@ -160,12 +285,21 @@
 
 [^1]: [UUID Generator](https://www.uuidgenerator.net/)
 
-[^2]: [Harmony.js](harmony.js)
+[^2]: [Harmony.js](./harmony.js)
 
 [^3]: [Get Notepad++](https://notepad-plus-plus.org/downloads/)
 
-[^4]: [Get MT Manager](https://t.me/new_folder_revil/3172)
+[^4]: [Get MT Manager](https://t.me/mtmanager/351)
 
-[^5]: [github.com/vfarid](https://raw.githubusercontent.com/vfarid/cf-clean-ips/main/list.json)
+[^5]: [REvil cleanIPs](https://github.com/NiREvil/vless/blob/main/Cloudflare-IPs.json)
 
-[^6]: [github.com/NiREvil](https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json)
+[^6]: [github.com NiREvil](https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json)
+
+
+[ZiZifn]: https://github.com/zizifn/edgetunnel
+[Harmony]: https://github.com/NiREvil/Harmony
+[NiREvil]: https://github.com/NiREvil/
+[2]: https://www.uuidgenerator.net
+[3]: https://github.com/NiREvil/vless/blob/main/sub/ProxyIP.md
+[4]: https://scamalytics.com/ip/api/enquiry?monthly_api_calls=5000
+[5]: https://github.com/NiREvil/vless/blob/main/Cloudflare-IPs.json
