@@ -1,6 +1,6 @@
 /**
  * Harmony - VLESS Subscription Generator for Cloudflare Workers
- * - Last Update: Mon, November 11, 2025, 04:20 UTC.
+ * - Last Update: Tue, December 25, 2025, 04:20 UTC.
  * - https://github.com/NiREvil/Harmony
  * 
  * This worker builds a V2Ray subscription link with the ability to automatically add 
@@ -58,9 +58,9 @@ const USER_SETTINGS = {
       tls: true,
       allowInsecure: true,
       ports: ["443", "8443", "2053", "2083", "2087", "2096"], // Standard cloudflare TLS ports
-      alpn: "h3", // HTTP/3 for better performance
+      alpn: 'http/1.1', // Application-layer protocol negotiation (websocket only support http/1.1)
       fp: ["chrome"], // Client fingerprint (currently only chrome works reliably)
-      dataSource: "static", // Use static IPs
+      dataSource: "dynamic1", // Use static IPs
       randomizeSni: true // Set to true to randomize SNI character casing
     },
     {
@@ -68,13 +68,13 @@ const USER_SETTINGS = {
       name: "| HAЯMOИY ᵀᶜᴾ |",
       host: "index.forexample.workers.dev",
       sni: "", // Must be empty for non-TLS
-      path: "/random:12",
+      path: "/random:16",
       tls: false,
       allowInsecure: false,
       ports: ["80", "8080", "8880", "2052", "2082", "2086", "2095"], // Standard cloudflare HTTP ports
       alpn: "", // Must be empty for non-TLS
       fp: ["chrome"],
-      dataSource: "dynamic1", // Use the first IP source
+      dataSource: "dynamic2", // Use the first IP source
       randomizeSni: false
     },
     {
@@ -82,13 +82,13 @@ const USER_SETTINGS = {
       name: "| HAЯMOИY ᴱᴹˢ |",
       host: "index.forexample.workers.dev",
       sni: "index.forexample.workers.dev",
-      path: "/random:8?ed=2056", // Fixed path value optimized for xray core
+      path: "/random:16?ed=2048", // Fixed path value optimized for xray core
       tls: true,
       allowInsecure: true,
       ports: ["443", "8443", "2053"],
       alpn: "http/1.1",
       fp: ["chrome"],
-      dataSource: "dynamic2", // Use the second IP source
+      dataSource: "static", // Use the second IP source
       randomizeSni: true
     }
   ]
