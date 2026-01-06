@@ -6,11 +6,11 @@ index: true
 hero:
   name: "Harmony"
   text: "Generates VLESS proxy configurations."
-  tagline: "Welcome to Harmony - a powerful VLESS proxy configuration generator that automatically integrates clean Cloudflare IPs for enhanced connectivity and performance. This guide will walk you through getting Harmony up and running in minutes."
+  tagline: "Welcome to Harmony — a powerful VLESS proxy configuration generator that automatically integrates clean Cloudflare IPs for enhanced connectivity and performance. This guide will walk you through getting Harmony up and running in minutes."
   actions:
     - theme: brand
       text: Get started 
-      link: /1/quick-start
+      link: /1/overview
     - theme: alt
       text: Harmony on GitHub
       link: https://github.com/NiREvil/Harmony
