@@ -2,7 +2,6 @@ import { defineConfig } from 'vitepress';
 import footnote from 'markdown-it-footnote';
 import mathjax3 from 'markdown-it-mathjax3';
 import attrs from 'markdown-it-attrs';
-import { mermaid } from 'vitepress-plugin-mermaid';
 import { tabsMarkdownPlugin } from 'vitepress-plugin-tabs';
 import { InlineLinkPreviewElementTransform } from '@nolebase/vitepress-plugin-inline-link-preview/markdown-it';
 
@@ -13,13 +12,13 @@ export default defineConfig({
   base: base,
   cleanUrls: true,
   ignoreDeadLinks: true,
-  title: "Harmony Project",
+  title: "Documents",
   description: "Documentation for Harmony Project",
 
   head: [
     ['link', { rel: 'icon', href: `${base}favicon.ico` }],
     ['link', { rel: 'preconnect', href: 'https://fonts.googleapis.com' }],
-    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' }],
+    ['link', { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: 'anonymous' }],
     [
       'link',
       {
@@ -49,19 +48,21 @@ export default defineConfig({
   ],
 
   markdown: {
-    config: (md) => {
-      md.use(footnote);
-      md.use(mathjax3);
-      md.use(attrs);
-      md.use(tabsMarkdownPlugin);
-      md.use(InlineLinkPreviewElementTransform, {
-        tag: 'NolebaseInlineLinkPreview'
-      });
-    },
-    lineNumbers: true,
+  config: (md) => {
+    md.use(footnote);
+    md.use(attrs);
+    md.use(mathjax3);
+    md.use(tabsMarkdownPlugin);
+    md.use(InlineLinkPreviewElementTransform, {
+      tag: 'NolebaseInlineLinkPreview'
+    });
   },
+  lineNumbers: true,
+},
 
-  mermaid: {},
+  mermaid: {
+    theme: 'default'
+  },
 
   locales: {
     root: {
@@ -139,8 +140,8 @@ export default defineConfig({
         ],
         
         footer: {
-          copyright: '© 2026 REvil — All Rights Reserved',
-          message: 'Made with VitePress',
+          copyright: '© 2026 REvil — All Rights Reserved.',
+          message: '',
         },
       },
     },
