@@ -22,8 +22,10 @@
 <div dir="rtl">
 
 <details>
-‏<summary>توضیحات پیرامون ساخت کانفیگ</summary>
+‏<summary><strong> توضیحات پیرامون ساخت کانفیگ </strong></summary>
 
+  <br/>
+  
 ## 1. ایجاد کانفیگ Vless
 
 ### [ZiZifn (Rust-wsam)][ZiF]
@@ -101,7 +103,7 @@
 > <br/>
 > 
 > <details>
-> <summary> مشاهده اسکرین‌شات‌ها </summary> <br/>
+> <summary><strong>🩻 مشاهده اسکرین‌شات</strong></summary> <br/>
 > 
 > <p align="center">
 >  <img src="https://github.com/user-attachments/assets/b921df78-6471-4ce5-8f2a-d3b2058542de" alt="upload-1" width="768px" />
@@ -140,12 +142,16 @@
 > برای شخصی‌سازی بیشتر، لطفاً توضیحات زیر را بخوانید.
 >
 > <br/>
+>
+> 
+> <br/>
 
-<br/>
+<div dir="rtl">
 
-# توضیحات غیر ضروری
+<details>
+<summary><strong>📦 توضیحات غیرضروری</strong></summary>
 
-> قبل‌تر گفتم واسه‌ی اینکه بتونیم شخصا از این اسکریپت استفاده کنیم، باید UUID و Hostname خودمون‌رو در لاین‌های ذکر شده در ابتدای کد جای‌گذاری کنیم. حالا می‌خوام یکم بیشتر شخصی‌سازی کنیم بر حسب نیاز.
+قبل‌تر گفتم واسه‌ی اینکه بتونیم شخصا از این اسکریپت استفاده کنیم، باید UUID و Hostname خودمون‌رو در لاین‌های ذکر شده در ابتدای کد جای‌گذاری کنیم. حالا می‌خوام یکم بیشتر شخصی‌سازی کنیم بر حسب نیاز.
 
 <br/>
 
@@ -212,13 +218,13 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 
 > [!TIP]
 >
-> ```CSS
-> TLS:.
+> ```js
+> TLS:  
 > ports: ["443", "8443", "2053", "2083", "2087", "2096"],
 > ```
 >
-> ```CSS
-> TCP:
+> ```js
+> TCP:  
 > ports: ["80", "8080", "8880", "2052", "2082", "2086", "2095"],
 > ```
 
@@ -236,7 +242,13 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 و آخرین نکته، گفتم که سه تا دسته 10 تایی کانفیگ داریم تو خروجی این کد، می‌تونید واسه هر دسته یه کانفیگ متفاوت قرار بدید، مثلا واسه دسته اول Host و SNI از کانفیگی که با کد BPB ساختید واسه دسته دوم هاست و sni کانفیگی که با کد فرضا Edtunnel ساختید رو قرار بدید و واسه دسته سوم هر هاست‌نیم و sni کانفیگ دیگه ای رو، ولی به یک شرط، به شرطی که واسه همه‌ی این سه تا از یک UUID استفاده کرده باشید، UUID همشون باید مشترک باشه و همونم تو لاین [32] کد قرار داشته باشه.  
 [![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=plastic&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/NiREvil/Harmony)
 
-**کنجکاو باشید. 🩶🪐**
+**کنجکاو باشید 🩶🪐**
+
+</details> 
+
+</div>
+
+<br/>
 
 [^1]: [UUID Generator](https://www.uuidgenerator.net/)
 
@@ -267,12 +279,14 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 [37]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L37
 [54]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L54
 [55]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L55
+[56]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L56
 [57]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L57
 [60]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L60
 [61]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L61
 [62]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L62
 [68]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L68
 [69]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L69
+[x]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L70
 [71]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L71
 [74]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L74
 [75]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L75
