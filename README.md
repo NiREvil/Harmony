@@ -56,7 +56,7 @@
 ابتدا اسکریپت هارمونی را کپی یا دانلود کنید. [^2]  
 [worker.js](./worker.js)
 
-این اسکریپت را می‌توان توسط [^3] Notepad++ در ویندوز یا ابزارهای مدیریت فایل مانند [^4] MT Manager در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلودفلر ایجاد کرده و این کد را داخل آن جایگذاری و سپس اقدام به ویرایش آن کنید.
+این اسکریپت را می‌توان توسط [^3] `Notepad++` در ویندوز یا ابزارهای مدیریت فایل مانند [^4] `MT Manager` در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلودفلر ایجاد کرده و این کد را داخل آن جایگذاری و سپس اقدام به ویرایش آن کنید.
 
 ### ویرایش UUID
 
@@ -67,16 +67,16 @@
 در این مرحله از ویرایش کد، باید ادرس هاست کانفیگ خود را با `hostname` پیش‌فرض کد در سه بخش مختلف جایگزین کنید.
 
 **دسته‌ی اول کانفیگ‌های TLS**  
-- Host: line 55
-- SNI: line 56
+- Host: line [55]
+- SNI: line [56]
 
 **دسته دوم کانفیگ‌های TCP**   
-- Host: line 69
-- SNI: line 70
+- Host: line [69]
+- SNI: line [x]
 
 **دسته سوم کانفیگ‌های اضطراری**  
-- Host: line 83
-- SNI: line 84
+- Host: line [83]
+- SNI: line [84]
 
 **نکته:** در کانفیگ‌هایی که با وورکر یا پیج به میزبانی کلادفلر ساخته می‌شوند پارامتر SNI همان Hostname می‌باشد.
 
@@ -163,7 +163,7 @@
 
 ### مخزن دوم
 
-مخزن دوم زیر مخزن اول یعنی در لاین [978] نوشته شده با اسم `dinamic2` که این‌هم باز دوباره واسه خودمونه، یه [Api ساده][6] برای فچ کردن آی‌پی کلادفلر از چند‌جای مختلف هستش.
+مخزن دوم زیر مخزن اول یعنی در لاین [977] نوشته شده با اسم `dinamic2` که این‌هم باز دوباره واسه خودمونه، یه [Api ساده][6] برای فچ کردن آی‌پی کلادفلر از چند‌جای مختلف هستش.
 
 <br/>
 
@@ -262,26 +262,32 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 [4]: https://scamalytics.com/ip/api/enquiry?monthly_api_calls=5000
 [5]: https://github.com/NiREvil/vless/blob/main/Cloudflare-IPs.json
 [6]: https://strawberry.victoriacross.ir
-[32]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L32
-[35]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L35
-[37]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L37
-[54]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L54
-[57]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L57
-[60]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L60
-[61]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L61
-[62]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L62
-[68]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L68
-[71]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L71
-[74]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L74
-[75]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L75
-[76]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L76
-[82]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L82
-[88]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L88
-[89]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L61ū
-[90]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L90
-[102]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L102
-[718]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L718
-[720]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L720
-[926]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L926
-[932]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L932
-[933]: https://github.com/NiREvil/Harmony/blob/9039d72fd0af400e4e41648806a6058283b3e058/worker.js#L933
+[32]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L32
+[35]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L35
+[37]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L37
+[54]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L54
+[55]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L55
+[57]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L57
+[60]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L60
+[61]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L61
+[62]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L62
+[68]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L68
+[69]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L69
+[71]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L71
+[74]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L74
+[75]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L75
+[76]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L76
+[82]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L82
+[83]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L83
+[84]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L84
+[85]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L85
+[88]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L88
+[89]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L89
+[90]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L90
+[102]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L102
+[718]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L718
+[720]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L720
+[971]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L971
+[976]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L976
+[977]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L977
+
