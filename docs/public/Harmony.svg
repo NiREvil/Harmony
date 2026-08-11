@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 320" role="img" aria-label="Harmony">
+  <defs>
+    <linearGradient id="ink" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%"  stop-color="#0b1220"/>
+      <stop offset="100%" stop-color="#3b4a63"/>
+    </linearGradient>
+  </defs>
+
+  <text x="50%" y="52%"
+        text-anchor="middle"
+        dominant-baseline="middle"
+        font-family="'Playfair Display','Didot','Bodoni MT',Georgia,'Times New Roman',serif"
+        font-size="190"
+        font-weight="500"
+        letter-spacing="4"
+        fill="url(#ink)">Harmony</text>
+</svg>
