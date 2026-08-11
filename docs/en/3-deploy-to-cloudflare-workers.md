@@ -43,7 +43,7 @@ Before you begin the deployment, you need two pieces of information extracted fr
 
 If you don't yet have a VLESS proxy Worker, create one first using any compatible generator, then return here. Harmony is a **subscription generator** — it wraps your existing proxy endpoint with automatic clean IP injection.
 
-## 🗺️ Deployment Flow
+##  Deployment Flow
 
 The entire process follows a linear path from download to live subscription:
 
@@ -196,7 +196,7 @@ If you accidentally corrupt the file, the safest recovery is to re-download a cl
 ## 💠 Next Steps
 Your Harmony Worker is now live. To go deeper into configuration and optimization:
 
-- **[Architecture Overview](./4-architecture-overview.md)** — understand how the fetch pipeline, IP sources, and link builder interact
-- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup.md)** — detailed reference for the two most critical parameters
-- **[IP Data Sources](./8-ip-data-sources.md)** — learn how `static`, `dynamic1`, and `dynamic2` sources differ and when to use each
-- **[VLESS Configuration Groups](./5-vless-configuration-groups.md)** — customize group count, names, and port selections
+- **[Architecture Overview](./4-architecture-overview)** — understand how the fetch pipeline, IP sources, and link builder interact
+- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup)** — detailed reference for the two most critical parameters
+- **[IP Data Sources](./8-ip-data-sources)** — learn how `static`, `dynamic1`, and `dynamic2` sources differ and when to use each
+- **[VLESS Configuration Groups](./5-vless-configuration-groups)** — customize group count, names, and port selections

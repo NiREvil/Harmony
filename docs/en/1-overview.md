@@ -46,18 +46,20 @@ head:
       content: "Single-file Cloudflare Worker for VLESS proxy subscriptions with clean IP injection"
 ---
 
+<br/>
+<p align="center">
+  <img src="/Harmony.svg" alt="welcome" width="1000px" />
+</p><br/>
+
+<br><br/> 
+
 # Harmony
 
 > ⏱️ 7 min · 🟢 Level: Beginner
 
 **Harmony** is a single-file Cloudflare Worker that generates VLESS proxy subscription links with automatically injected clean Cloudflare IP addresses. When a client requests your worker URL, Harmony dynamically fetches fresh clean IPs from multiple sources, builds fully-formed VLESS configurations across TLS and non-TLS transport groups, and returns a base64-encoded subscription — ready to paste into any sing-box or Xray-core client. The entire system runs at the edge with zero infrastructure, zero cold starts, and a 3-second timeout guarantee on all external fetches.
 
-<br/>
-<p align="center">
-  <img src="/Harmony.svg" alt="welcome" width="1000px" />
-</p><br/>
-
-## 📁 Project Structure
+## Project Structure
 
 The repository is intentionally minimal — one worker script, one IP data file, and a VitePress documentation site. There are no build steps for the worker itself; it deploys directly to Cloudflare.
 
@@ -84,11 +86,11 @@ Harmony/
 
 <br/>
 
-::: danger `runtime dependencies`  
+::: danger runtime dependencies
 The worker has **zero runtime dependencies** — no `node_modules`, no bundler, no framework. You copy `worker.js` into the Cloudflare dashboard editor and deploy. That's it.  
 :::
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 Harmony follows a **fetch → resolve → build → encode** pipeline. Every client request triggers the full pipeline from scratch, ensuring IPs are always fresh on each subscription update.
 
@@ -106,7 +108,7 @@ flowchart LR
     Encoder -->|Subscription + Headers| Client
 ```
 
-## 🧩 Core Components
+## Core Components
 
 Despite being a single file, `worker.js` contains four logically distinct subsystems. Understanding each one is the key to customizing Harmony effectively.
 
@@ -154,7 +156,7 @@ The final step encodes all VLESS URIs into a **base64 subscription** with custom
 
 The fake subscription info (`generateCakeSubscriptionInfo`) simulates a 440 TB quota with dynamically varying usage based on the current hour of day, so the client's traffic counter always appears active and realistic.
 
-## 🎯 Default Configuration Groups
+## Default Configuration Groups
 
 Out of the box, Harmony ships with **three groups** that cover the most common deployment patterns. Each group independently fetches from its designated IP source and generates `ipCount` configurations.
 
@@ -166,7 +168,7 @@ Out of the box, Harmony ships with **three groups** that cover the most common d
 
 The **Emergency group** uses only static IPs — it's your fallback when external APIs are unreachable. You can add, remove, or reorder groups freely in the `USER_SETTINGS.groups` array.
 
-## 🛡️ Anti-Detection Features
+## Anti-Detection Features
 
 Harmony bakes in several techniques that increase resilience against traffic analysis and censorship filtering:
 
@@ -175,7 +177,7 @@ Harmony bakes in several techniques that increase resilience against traffic ana
 - **Client Fingerprint** — The `fp=chrome` parameter instructs Xray-core to mimic a Chrome browser's TLS ClientHello, blending the connection into normal HTTPS traffic.
 - **Early Data** — The `ed=2560` parameter sends up to 2560 bytes of data in the first TLS flight, reducing round-trip latency for the initial WebSocket handshake.
 
-## ⚡ Key Feature Summary
+## Key Feature Summary
 
 | Feature | Implementation | Benefit |
 | --- | --- | --- |
@@ -188,10 +190,10 @@ Harmony bakes in several techniques that increase resilience against traffic ana
 | Custom subscription name | `?name=` query parameter or `#hash` | Personalize subscription label in client |
 
 
-## 💠 Next Steps
+## Next Steps
 
 Now that you understand what Harmony does and how it's structured, follow this progression to get running:
 
-1. **[Quick Start](./2-quick-start.md)** — Deploy Harmony to Cloudflare Workers in under 5 minutes.
-2. **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers.md)** — Detailed deployment walkthrough with screenshots.
-3. **[Architecture Overview](./4-architecture-overview.md)** — Deep dive into the request lifecycle and data flow.
+1. **[Quick Start](./2-quick-start)** — Deploy Harmony to Cloudflare Workers in under 5 minutes.
+2. **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers)** — Detailed deployment walkthrough with screenshots.
+3. **[Architecture Overview](./4-architecture-overview)** — Deep dive into the request lifecycle and data flow.

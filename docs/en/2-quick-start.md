@@ -34,7 +34,7 @@ head:
 
 Get Harmony running in under five minutes. This page walks you through the essential steps: obtaining your VLESS credentials, customizing the worker script, deploying to Cloudflare, and using your subscription link. No prior experience with Cloudflare Workers is assumed.
 
-## 📋 Prerequisites
+## Prerequisites
 
 Before you begin, ensure you have the following:
 
@@ -162,7 +162,7 @@ Add the subscription link to any proxy client that supports the **sing-box** or 
 3. Click **Update Subscription** — the client will fetch and decode all 30 configurations.
 4. Select a config and connect.
 
-## 🔄 What Happens When You Update?
+## What Happens When You Update?
 
 Every time you click **Update Subscription** in your client, Harmony performs this pipeline:
 
@@ -177,7 +177,7 @@ flowchart LR
 
 This produces **30 VLESS configurations** by default (10 per group × 3 groups), each routed through a different clean Cloudflare IP for maximum reliability. The `Profile-Update-Interval: 6` header tells your client to auto-refresh every 6 hours, so your IP list stays fresh.
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Symptom | Likely Cause | Fix |
 | --- | --- | --- |
@@ -190,12 +190,12 @@ This produces **30 VLESS configurations** by default (10 per group × 3 groups),
 
 ::: info NOTE
 If dynamic IP sources are blocked in your region, the static IPs in Group 3 still provide a working fallback. You can also replace the static IPs in the `staticIPs` array (lines 102–971) with your own known-good addresses.
-::;
+:::
 
-## 💠 Next Steps
+## Next Steps
 You now have a working Harmony subscription generating fresh VLESS configs with clean IPs. Here's where to go next:
 
-- **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers.md)** — production deployment best practices, custom domains, and routing
-- **[Architecture Overview](./4-architecture-overview.md)** — understand how the IP pipeline, link builder, and subscription encoder work together
-- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup.md)** — deep configuration of your identity parameters
-- **[IP Data Sources](./8-ip-data-sources.md)** — customize which clean IP sources Harmony fetches from
+- **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers)** — production deployment best practices, custom domains, and routing
+- **[Architecture Overview](./4-architecture-overview)** — understand how the IP pipeline, link builder, and subscription encoder work together
+- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup)** — deep configuration of your identity parameters
+- **[IP Data Sources](./8-ip-data-sources)** — customize which clean IP sources Harmony fetches from

@@ -1,47 +1,57 @@
 ---
 # https://vitepress.dev/reference/default-theme-home-page
 layout: home
-index: true
 
 hero:
   name: "Harmony"
-  text: "Generates VLESS proxy configurations."
-  tagline: "Welcome to Harmony — a powerful VLESS proxy configuration generator that automatically integrates clean Cloudflare IPs for enhanced connectivity and performance. This guide will walk you through getting Harmony up and running in minutes."
+  text: "VLESS Proxy Subscription Generator"
+  tagline: "A single-file Cloudflare Worker that automatically injects clean IPs into your VLESS configurations. Zero dependencies, 30+ configs per update, 3-second timeout guarantee."
+  image:
+    src: /logo-h.svg
+    alt: Harmony Logo
   actions:
     - theme: brand
-      text: Get started 
-      link: /1/overview
+      text: Get Started
+      link: /en/1-overview
     - theme: alt
-      text: Harmony on GitHub
+      text: View on GitHub
       link: https://github.com/NiREvil/Harmony
 
 features:
-  - title: "🔒 Harmony Configuration System"
-    details: "The Harmony.js Configuration System serves as the core configuration generation and management component for the VLESS proxy infrastructure."
-  - title: "⚙️ Network configuration"
-    details: "The TCP/UDP proxy handling system in Harmony provides a sophisticated network layer that manages both TCP and UDP traffic through WebSocket connections, with specialized handling for DNS queries over UDP."
-  - title: "🔰 Security and authentication"
-    details: "The Harmony project implements a robust UUID validation and user management system that serves as the foundation for secure VLESS proxy authentication"
-  - title: "🦋 Client configuration generation"
-    details: "Base64 configuration encoding is a critical component in the Harmony project's client configuration generation system, enabling secure and standardized transmission of VLESS proxy configurations to various client applications."
+  - icon: 🛡️
+    title: Anti-Detection Features
+    details: "SNI case randomization, path obfuscation with /random:N directive, Chrome TLS fingerprint, and Early Data optimization to bypass DPI filters."
+  - icon: 🌐
+    title: Multi-Source IP Pipeline
+    details: "Fetches clean Cloudflare IPs from three independent sources (GitHub repo, Strawberry API, and static fallback) with automatic failover and deduplication."
+  - icon: ⚡
+    title: Edge-Deployed Performance
+    details: "Runs entirely on Cloudflare Workers edge network with zero cold starts, 3-second fetch timeout, and per-request IP freshness for maximum reliability."
+  - icon: 📦
+    title: Universal Client Support
+    details: "Generates Base64-encoded subscriptions compatible with v2rayN, NekoBox, Clash Meta, Streisand, sing-box, Xray-core, and all major VLESS clients."
 ---
 
 <script setup>
-import { data } from '/.vitepress/posts.data.js'
-import { useData } from 'vitepress'
-const { lang } = useData()
-const posts = data[lang.value] ?? []
+import { data as posts } from './.vitepress/posts.data.js'
 </script>
 
-<div class="latest-posts-section">
-  <h2 class="section-title">Latest Posts</h2>
-  <div class="posts-grid" v-if="posts && posts.length > 0">
+<div class="latest-posts-section" v-if="posts && posts.length > 0">
+  <h2 class="section-title">Latest Documentation</h2>
+  <div class="posts-grid">
     <article v-for="post of posts" :key="post.url" class="post-card">
+      <div class="post-category">
+        <span class="category-icon">{{ post.categoryIcon }}</span>
+        <span class="category-text">{{ post.category }}</span>
+      </div>
       <div class="post-content">
         <h3 class="post-title">
           <a :href="post.url" class="post-link">{{ post.title }}</a>
         </h3>
-        <p class="post-date"> {{ post.date.string }}</p>
+        <p class="post-date">
+          <span class="date-icon">📅</span>
+          {{ post.date.string }}
+        </p>
         <p class="post-excerpt" v-if="post.excerpt">{{ post.excerpt }}</p>
         <div class="post-actions">
           <a :href="post.url" class="read-more">Read More →</a>
@@ -49,15 +59,12 @@ const posts = data[lang.value] ?? []
       </div>
     </article>
   </div>
-  <div v-else class="no-posts">
-    <p>No posts available at the moment.</p>
-  </div>
 </div>
 
 <style scoped>
 .latest-posts-section {
   max-width: 1152px;
-  margin: 3rem auto 0;
+  margin: 4rem auto 0;
   padding: 0 24px;
 }
 
@@ -65,7 +72,7 @@ const posts = data[lang.value] ?? []
   font-size: 2rem;
   font-weight: 700;
   color: var(--vp-c-text-1);
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   text-align: center;
   position: relative;
 }
@@ -73,20 +80,20 @@ const posts = data[lang.value] ?? []
 .section-title::after {
   content: '';
   position: absolute;
-  bottom: -8px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 60px;
-  height: 3px;
+  width: 80px;
+  height: 4px;
   background: linear-gradient(90deg, var(--vp-c-brand-1), var(--vp-c-brand-2));
   border-radius: 2px;
 }
 
 .posts-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin-top: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2.5rem;
 }
 
 .post-card {
@@ -96,6 +103,8 @@ const posts = data[lang.value] ?? []
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-card::before {
@@ -121,13 +130,32 @@ const posts = data[lang.value] ?? []
   transform: scaleX(1);
 }
 
+.post-category {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--vp-c-brand-1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.category-icon {
+  font-size: 1rem;
+}
+
 .post-content {
-  padding: 2rem;
+  padding: 1rem 1.5rem 1.5rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
 }
 
 .post-title {
-  margin: 0 0 1rem 0;
-  font-size: 1.25rem;
+  margin: 0 0 0.75rem 0;
+  font-size: 1.15rem;
   font-weight: 600;
   line-height: 1.4;
 }
@@ -144,17 +172,23 @@ const posts = data[lang.value] ?? []
 
 .post-date {
   color: var(--vp-c-text-2);
-  font-size: 0.875rem;
-  margin: 0 0 1rem 0;
+  font-size: 0.8rem;
+  margin: 0 0 0.75rem 0;
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 0.4rem;
+}
+
+.date-icon {
+  font-size: 0.9rem;
 }
 
 .post-excerpt {
   color: var(--vp-c-text-2);
   line-height: 1.6;
-  margin: 0 0 1.5rem 0;
+  margin: 0 0 1.25rem 0;
+  font-size: 0.9rem;
+  flex: 1;
   display: -webkit-box;
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
@@ -164,14 +198,15 @@ const posts = data[lang.value] ?? []
 .post-actions {
   display: flex;
   justify-content: flex-end;
+  margin-top: auto;
 }
 
 .read-more {
   color: var(--vp-c-brand-1);
   text-decoration: none;
   font-weight: 500;
-  font-size: 0.875rem;
-  padding: 0.5rem 1rem;
+  font-size: 0.85rem;
+  padding: 0.4rem 0.9rem;
   border-radius: 6px;
   transition: all 0.3s ease;
   border: 1px solid transparent;
@@ -182,12 +217,6 @@ const posts = data[lang.value] ?? []
   border-color: var(--vp-c-brand-1);
 }
 
-.no-posts {
-  text-align: center;
-  padding: 3rem;
-  color: var(--vp-c-text-2);
-}
-
 @media (max-width: 768px) {
   .latest-posts-section {
     padding: 0 16px;
@@ -195,25 +224,24 @@ const posts = data[lang.value] ?? []
 
   .posts-grid {
     grid-template-columns: 1fr;
-    gap: 1.5rem;
+    gap: 1.25rem;
   }
 
   .post-content {
-    padding: 1.5rem;
+    padding: 1rem 1.25rem 1.25rem;
   }
 
   .section-title {
-    font-size: 1.75rem;
+    font-size: 1.6rem;
   }
 }
 
-@media (prefers-color-scheme: dark) {
-  .post-card {
-    background: var(--vp-c-bg-alt);
-  }
+/* VitePress dark mode */
+html.dark .post-card {
+  background: var(--vp-c-bg-alt);
+}
 
-  .post-card:hover {
-    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
-  }
+html.dark .post-card:hover {
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
 }
 </style>
