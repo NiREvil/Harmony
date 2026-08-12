@@ -28,6 +28,8 @@ head:
 
 # Fake Subscription Info Headers
 
+> ⏱️ 12 min · Level: <Badge type="warning" text="Intermediate" />  
+
 Harmony injects **synthetic subscription metadata** into every HTTP response, enabling V2Ray/Xray-compatible clients to display plausible traffic quotas, expiry dates, and update intervals — even though the worker operates without any real accounting backend. This mechanism is essential for client compatibility: most proxy clients (v2rayN, Nekobox, Sing-box, Clash Meta) parse the `Subscription-Userinfo` header to render usage dashboards, and will malfunction or refuse to import subscriptions that omit it entirely.
 
 ## The Subscription-Userinfo Contract
@@ -69,7 +71,7 @@ const CAKE_SETTINGS = {
 
 ## Time-Driven Dynamic Usage
 
-::: danger `Time-Correlated Usage Curve`
+::: danger Time-Correlated Usage Curve
 The critical design insight is that **the reported usage is not static** — it advances throughout the day based on the current hour, creating the illusion of active, real-time consumption.
 :::
 
@@ -123,7 +125,7 @@ Without synthetic headers, clients would either:
 
 The fake headers solve all three problems simultaneously with zero operational overhead — no storage, no computation beyond simple arithmetic, and no external dependencies. The time-based growth function adds a thin layer of dynamism that prevents the dashboard from appearing frozen or suspiciously static.
 
-::: info `Safe Customization`
+::: info Safe Customization
 Modifying `CAKE_SETTINGS` is safe and has no side effects on proxy functionality — the headers are purely informational for the client UI. Increase `total_TB` if your client warns about quota limits; decrease `daily_growth_GB` if the usage curve appears unrealistically steep for your use case.
 :::
 
@@ -131,7 +133,6 @@ Modifying `CAKE_SETTINGS` is safe and has no side effects on proxy functionality
 
 The fake subscription info generation is the **final step** in Harmony's request pipeline, executed after all VLESS configurations have been assembled and before the base64-encoded response is returned:
 
-::: details Click here to see the processing flow
 ```mermaid
 sequenceDiagram
     Client->>Cloudflare Worker: GET /subscription
@@ -142,10 +143,9 @@ sequenceDiagram
     Cloudflare Worker->>Cloudflare Worker: Assemble response headers (Content-Type, Update-Interval, Userinfo, Title)
     Cloudflare Worker-->>Client: 200 OK + headers + base64 (VLESS links)
 ```
-:::
 
 The subscription info headers are generated at line 1068, immediately after the VLESS configuration loop completes and immediately before the `Response` object is constructed. This ordering guarantees that the headers always reflect the current server time, even if IP fetching or link generation took several seconds.
 
-## 💠 Next Steps
+## Next Steps
 
-Learn how Harmony randomizes SNI casing to evade DPI-based filtering → **[SNI Case Randomization](./14-sni-case-randomization.md).**  
+Learn how Harmony randomizes SNI casing to evade DPI-based filtering → **[SNI Case Randomization](./14-sni-case-randomization).**  

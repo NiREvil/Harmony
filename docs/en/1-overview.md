@@ -46,16 +46,11 @@ head:
       content: "Single-file Cloudflare Worker for VLESS proxy subscriptions with clean IP injection"
 ---
 
-<br/>
 <p align="center">
   <img src="/Harmony.svg" alt="welcome" width="1000px" />
-</p><br/>
+</p><br><br/>
 
-<br><br/> 
-
-# Harmony
-
-> ⏱️ 7 min · 🟢 Level: Beginner
+> ⏱️ 7 min · Level: <Badge type="tip" text="Beginner" />  
 
 **Harmony** is a single-file Cloudflare Worker that generates VLESS proxy subscription links with automatically injected clean Cloudflare IP addresses. When a client requests your worker URL, Harmony dynamically fetches fresh clean IPs from multiple sources, builds fully-formed VLESS configurations across TLS and non-TLS transport groups, and returns a base64-encoded subscription — ready to paste into any sing-box or Xray-core client. The entire system runs at the edge with zero infrastructure, zero cold starts, and a 3-second timeout guarantee on all external fetches.
 

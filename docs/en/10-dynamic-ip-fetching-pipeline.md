@@ -28,11 +28,11 @@ head:
 
 # Dynamic IP Fetching Pipeline
 
-> ⏱️ 7 min · 🔴 Level: Advanced
+> ⏱️ 7 min · Level: <Badge type="danger" text="Advanced" />  
 
 The Dynamic IP Fetching Pipeline is Harmony's runtime mechanism for acquiring fresh Cloudflare clean IP addresses from external sources on every subscription request. Rather than relying solely on a baked-in static IP list, the pipeline executes parallel HTTP fetches against two independent IP providers, normalizes and deduplicates the results, then feeds them into the VLESS configuration generator — ensuring that each client "Update" action injects a newly shuffled set of clean IPs into the subscription output.
 
-## 🏗️ Pipeline Architecture
+## Pipeline Architecture
 
 The pipeline operates as a three-stage process within the `handleRequest` function: **fetch → extract → prepare**. Both dynamic sources are queried concurrently via `Promise.all`, each guarded by a 3-second timeout and a `.catch()` fallback that yields an empty array — guaranteeing that a single source failure never blocks the entire subscription response.
 
@@ -67,7 +67,7 @@ flowchart LR
     O --> P[ipDataSources Map]
 ```
 
-## 🔌 Source Endpoints and Response Schemas
+## Source Endpoints and Response Schemas
 
 The two dynamic endpoints are defined in the `ipSourceURLs` constant. They return **structurally different JSON payloads**, which the pipeline handles with distinct extraction lambdas.
 
@@ -85,7 +85,7 @@ The two dynamic endpoints are defined in the `ipSourceURLs` constant. They retur
 The `dynamic1` source pulls from the same schema as the local `cf-clean.json` Reference file — each object contains a `domain`, `ip` (IPv4), `ipv6`, `short_ipv6`, an `is_ir` regional flag, and `protocol_version`. The `dynamic2` endpoint (Strawberry API) uses a flatter structure where each object exposes an `ipv4` field directly within a `data` array.
 :::
 
-## ⏱️ The `fetchWithTimeout` Guard
+## The `fetchWithTimeout` Guard
 
 Every outbound HTTP request in the pipeline passes through the `fetchWithTimeout` wrapper, which couples the standard `fetch` API with an `AbortController` signal:
 
@@ -101,11 +101,11 @@ async function fetchWithTimeout(url, ms = 3000) {
 }
 ```
 
-::: warning ⚠️ `CRITICAL TIMEOUT`
+::: warning ⚠️ CRITICAL TIMEOUT
 The default timeout of **3000 ms** ensures the worker never stalls on an unresponsive IP source. Because Cloudflare Workers have a subrequest limit and CPU time constraints, this aggressive timeout is critical — if either source is slow or down, the pipeline gracefully degrades rather than failing outright. The `finally` block guarantees the timeout timer is always cleared, preventing memory leaks in the worker runtime.
 :::
 
-## 🔄 Extraction, Deduplication, and Shuffle
+## Extraction, Deduplication, and Shuffle
 
 Once both `Promise.all` branches resolve (or fall back to empty), the pipeline performs source-specific extraction:
 
@@ -114,7 +114,7 @@ Once both `Promise.all` branches resolve (or fall back to empty), the pipeline p
 
 Both lists then pass through a **two-step normalization**: `shuffleArray([...new Set(list)])`. The `new Set()` constructor eliminates duplicates, the spread operator converts back to an array, and `shuffleArray` applies a **Fisher-Yates** shuffle for randomization. This combined operation produces a unique, uniformly random ordering — meaning every subscription refresh yields a different IP sequence even if the source data hasn't changed.
 
-## 🔗 Group-to-Source Binding and IP Selection
+## Group-to-Source Binding and IP Selection
 
 After normalization, the three source lists are stored in the `ipDataSources` map keyed by `"static"`, `"dynamic1"`, and `"dynamic2"`. The pipeline then iterates over `USER_SETTINGS.groups`, and each group's `dataSource` field acts as a lookup key into this map:
 
@@ -124,11 +124,11 @@ After normalization, the three source lists are stored in the `ipDataSources` ma
 | Harmonyᵀᶜᴾ | `"dynamic2"` | Strawberry API IPs | Real-time clean IPs |
 | Harmonyᴱᴹˢ | `"static"` | Hardcoded `staticIPs` array | Stable, never-changing fallback |
 
-::: info INFO: PER-GROUP IP SELECTION
+::: info PER-GROUP IP SELECTION
 For each group, the inner loop walks the resolved IP list, collecting up to `USER_SETTINGS.ipCount` (default: 10) unique IPs. Each unique IP triggers a call to `createVlessLink(ip, group, settings)`, which produces one complete VLESS URI string. The `Set` guard within the loop prevents duplicate IPs within a single group even if the source list contains repeats that survived the earlier dedup (a safety net for edge cases).
 :::
 
-## 🛡️ Failure Modes and Graceful Degradation
+## Failure Modes and Graceful Degradation
 
 The pipeline is designed with **defensive redundancy** at every level:
 
@@ -137,11 +137,11 @@ The pipeline is designed with **defensive redundancy** at every level:
 3.  **Extraction null-safety**: `(response.field || [])` guards against missing fields, and `.filter(ip => ip)` removes null/undefined/empty-string IPs.
 4.  **Group-level empty list**: If a source completely fails, `ipDataSources[group.dataSource]` resolves to an empty shuffled array, the inner loop simply produces zero configs for that group, and the subscription response still returns configs from other groups.
 
-::: tip TIP: `PROMISE.ALL PATTERN`
+::: tip PROMISE.ALL PATTERN
 The `Promise.all` pattern means both dynamic fetches run in parallel, but a single rejection would reject the entire `Promise.all`. This is why each individual fetch chain includes its own `.catch()` — to convert failures into successful empty-resolved promises before they reach `Promise.all`.
 :::
 
-## ⚙️ Configuring the Pipeline
+## Configuring the Pipeline
 
 To modify the dynamic pipeline behavior, adjust these specific locations in `worker.js`:
 
@@ -157,10 +157,10 @@ To modify the dynamic pipeline behavior, adjust these specific locations in `wor
 When adding a third dynamic source, you must also: (1) add the URL to `ipSourceURLs`, (2) add a corresponding `fetchWithTimeout` call inside the `Promise.all` array, (3) add an extraction line that maps the response to a flat IP array, and (4) add the deduplicated/shuffled result to the `ipDataSources` map.
 :::
 
-::: info `UPDATE INTERVAL`
+::: info UPDATE INTERVAL
 The `Profile-Update-Interval: 6` header (L1072) tells clients to re-fetch the subscription every 6 hours. This aligns with the `dynamic1` GitHub source's update cadence — clients naturally receive fresh IPs at the same rate the source refreshes them.
 :::
 
-## 💠 Next Steps
+## Next Steps
 
-Understand how the extracted IPs become VLESS URIs in **[VLESS Link Builder](./11-vless-link-builder.md)**, or see how the static counterpart works in **[Static IP Fallback Strategy](./9-static-ip-fallback-strategy.md)**. For the raw JSON schema that `dynamic1` returns, consult **[cf-clean.json Reference](./cf-clean-json-reference.md)**.  
+Understand how the extracted IPs become VLESS URIs in **[VLESS Link Builder](./11-vless-link-builder)**, or see how the static counterpart works in **[Static IP Fallback Strategy](./9-static-ip-fallback-strategy)**. For the raw JSON schema that `dynamic1` returns, consult **[cf-clean.json Reference](./cf-clean-json-reference)**.  

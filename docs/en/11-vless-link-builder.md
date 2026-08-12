@@ -28,11 +28,11 @@ head:
 
 # VLESS Link Builder
 
-> ⏱️ 8 min · 🟡 Level: Intermediate
+> ⏱️ 8 min · Level: <Badge type="warning" text="Intermediate" />  
 
 The VLESS Link Builder is Harmony's core generation engine — the function that transforms group configuration definitions and resolved clean IPs into fully-formed `vless://` URIs ready for client consumption. Every subscription response is a product of this builder being invoked once per IP per group, producing up to **30 individual VLESS links** (configurable via `ipCount`) that are then Base64-encoded and served as a subscription payload.
 
-## 🏗️ How the Builder Fits the Pipeline
+## How the Builder Fits the Pipeline
 
 The link builder operates at the final stage of Harmony's request lifecycle. Before it runs, IPs have already been fetched, deduplicated, and shuffled. The builder's sole responsibility is to assemble syntactically correct VLESS URIs from the available data. The following diagram shows where `createVlessLink` sits in the end-to-end flow:
 
@@ -45,7 +45,7 @@ flowchart LR
     E --> F[Base64 Encode<br/>Subscription Payload]
 ```
 
-## 🔗 The VLESS URI Format
+## The VLESS URI Format
 
 Each link produced by the builder follows the standard VLESS share-link schema. Understanding this structure is essential for debugging misconfigured outputs:
 
@@ -61,7 +61,7 @@ vless://<uuid>@<ip>:<port>?<queryParams>#<remark>
 | `queryParams` | Built by `URLSearchParams` object | See table below |
 | `remark` | `encodeURIComponent(group.name)` | `Harmony%E1%B4%9B%E1%B4%B8%CB%A2` |
 
-## ⚙️ Query Parameter Construction
+## Query Parameter Construction
 
 The builder constructs query parameters in two phases — a **base set** that applies to all configurations, followed by **TLS-conditional parameters** that are only appended when `group.tls === true`.
 
@@ -86,11 +86,11 @@ The builder constructs query parameters in two phases — a **base set** that ap
 | `alpn` | `group.tls && group.alpn` | `group.alpn` | Application-Layer Protocol Negotiation |
 | `allowInsecure` | `group.tls && group.allowInsecure` | Hard-coded `"1"` | Skip certificate validation |
 
-::: warning ⚠️ `NON-TLS GROUPS`
+::: warning ⚠️ NON-TLS GROUPS
 **Non-TLS groups** (e.g., `Harmonyᵀᶜᴾ`) omit `security`, `sni`, `alpn`, and `allowInsecure` entirely — the builder does not emit empty or default values for these fields.
 :::
 
-## 🛠️ The `createVlessLink` Function — Step by Step
+## The `createVlessLink` Function — Step by Step
 
 The builder executes four sequential operations per invocation:
 
@@ -121,7 +121,7 @@ The `group.path` field supports a special `random:N` syntax that is resolved at 
 | `/random:14?ed=2048` | `/f2b8t6j1c5h0v3?ed=2048` |
 | `/my-fixed-path` | `/my-fixed-path` (unchanged) |
 
-::: tip `TRAILING QUERY STRINGS`
+::: tip TRAILING QUERY STRINGS
 Note that `random:N` replacement preserves any trailing query string (e.g., `?ed=2048`) because only the `random:\d+` token is replaced, not the entire string.
 :::
 
@@ -148,7 +148,7 @@ return `vless://${settings.uuid}@${ip}:${randomPort}?${queryParams.toString()}#$
 
 The remark (`ps`) is the `encodeURIComponent`-encoded group name, ensuring Unicode superscript characters (like `ᵀᴸˢ`) are safely embedded in the URI fragment.
 
-## 🔄 Link Generation Orchestration
+## Link Generation Orchestration
 
 The builder is not called directly by the request handler — it is invoked within a double loop that iterates **groups × IPs**. This orchestration lives in `handleRequest` and controls how many links are produced per group:
 
@@ -167,7 +167,7 @@ for (const group of USER_SETTINGS.groups) {
 }
 ```
 
-::: info `KEY BEHAVIORS`  
+::: info KEY BEHAVIORS
 - **IP cap per group**: Each group produces exactly `ipCount` (default 10) unique links — the `break` condition enforces this limit
 - **Deduplication**: The `uniqueIPs` Set prevents duplicate IPs within a single group, even if the source array contains repeats
 - **Cross-group independence**: The same IP can appear in multiple groups if it exists in multiple data sources — deduplication is per-group, not global
@@ -176,7 +176,7 @@ for (const group of USER_SETTINGS.groups) {
 With the default configuration of 3 groups × 10 IPs each, the total output is **30 VLESS links** per subscription refresh.  
 :::
 
-## 🗺️ Configuration-to-Link Mapping
+## Configuration-to-Link Mapping
 
 The following table shows how each field in a group definition maps to the final VLESS URI, using the default Group 1 (`Harmonyᵀᴸˢ`) as a concrete example:
 
@@ -194,7 +194,7 @@ The following table shows how each field in a group definition maps to the final
 | `dataSource` | `"dynamic1"` | Determines which IP pool feeds this group |
 | `randomizeSni` | `true` | SNI characters receive random casing |
 
-## 🧰 Utility Functions
+## Utility Functions
 
 Three utility functions support the link builder:
 
@@ -204,11 +204,11 @@ Three utility functions support the link builder:
 | `randomizeCase(str)` | Randomly upper/lower case each character | 50% probability per character |
 | `shuffleArray(array)` | Fisher-Yates shuffle for IP lists | In-place swap from last element backward |
 
-::: info `ARRAY COPYING`
+::: info ARRAY COPYING
 The `shuffleArray` function operates on a **copy** (`array.slice()`) rather than the original, ensuring the deduplicated IP sets remain unmodified for potential reuse across groups. Combined with `new Set(staticIPs)` deduplication in `handleRequest`, this guarantees each subscription refresh yields a random ordering without corrupting source data.
 :::
 
-## 📦 Complete Output Example
+## Complete Output Example
 
 Given the default configuration and a resolved IP of `104.16.148.32`, the builder produces a URI like:
 
@@ -222,9 +222,9 @@ Note how `URLSearchParams` automatically percent-encodes the path (`/` → `%2F`
 
 <br/>
 
-## 💠 What Comes Next
+## What Comes Next
 
 The VLESS links produced by this builder are collected into a `configsList` array and passed to the Base64 encoding stage. 
 
-To understand how the final subscription payload is assembled and delivered to clients, continue with **[Base64 Subscription Output](./12-base64-subscription-output.md)**.  
-For details on the fake metadata headers attached to the response, see **[Fake Subscription Info Headers](./13-fake-subscription-info-headers.md)**.  
+To understand how the final subscription payload is assembled and delivered to clients, continue with **[Base64 Subscription Output](./12-base64-subscription-output)**.  
+For details on the fake metadata headers attached to the response, see **[Fake Subscription Info Headers](./13-fake-subscription-info-headers)**.  

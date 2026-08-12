@@ -28,11 +28,11 @@ head:
 
 # Ports and ALPN Settings
 
-> ⏱️ 8 min · 🔴 Level: Advanced
+> ⏱️ 8 min · Level: <Badge type="danger" text="Advanced" />  
 
 Ports and ALPN (Application-Layer Protocol Negotiation) are two tightly coupled parameters that define **how** VLESS connections traverse Cloudflare's edge network. Ports determine the transport entry point, while ALPN negotiates the application protocol during the TLS handshake. In Harmony, both are defined per configuration group and carry strict compatibility constraints — a mismatch between port type and TLS/ALPN settings will produce non-functional configurations.
 
-## 🌐 Cloudflare Proxy Port Landscape
+## Cloudflare Proxy Port Landscape
 
 Cloudflare's reverse proxy only forwards traffic on a fixed set of ports. Any port outside these sets is silently dropped at the edge, making the connection unreachable. Harmony exposes these as per-group arrays from which a **single port is randomly selected** at subscription generation time, distributing clients across multiple entry points to reduce single-port congestion and detection surface.
 
@@ -45,7 +45,7 @@ Cloudflare's reverse proxy only forwards traffic on a fixed set of ports. Any po
 These six TLS ports and seven HTTP ports are the **complete** set of ports Cloudflare proxies for Workers traffic. No other ports will route to your Worker, regardless of configuration.
 :::
 
-## ⚙️ Port Configuration Per Group
+## Port Configuration Per Group
 
 Each group in `USER_SETTINGS.groups` declares a `ports` array. The default configuration demonstrates the canonical port assignment strategy:
 
@@ -71,7 +71,7 @@ ports: ["443", "2053"],
 Port values are stored as strings, not numbers. This is intentional — the VLESS URI template requires the port as a string segment in `vless://uuid@ip:port?params#name`, and string storage avoids implicit type coercion issues during link assembly.
 :::
 
-## 🎲 Random Port Selection at Runtime
+## Random Port Selection at Runtime
 
 Port selection is **non-deterministic** per configuration link. During `createVlessLink` execution, one port is randomly sampled from the group's array:
 
@@ -87,7 +87,7 @@ The selected port is embedded directly into the VLESS URI:
 return `vless://${settings.uuid}@${ip}:${randomPort}?${queryParams.toString()}#${ps}`;
 ```
 
-## 🔐 ALPN Protocol Negotiation
+## ALPN Protocol Negotiation
 
 ALPN is a TLS extension that lets the client and server agree on the application protocol during the handshake, before any application data flows. For VLESS-over-WebSocket configurations, the only viable ALPN value is **`http/1.1`**, because WebSocket upgrade requires an HTTP/1.1 request-response cycle. HTTP/2 and HTTP/3 ALPN values are incompatible with the WebSocket upgrade mechanism.
 
@@ -117,7 +117,7 @@ if (group.tls) {
 This double-gate — `group.tls === true` **and** `group.alpn` is truthy — ensures that non-TLS groups never emit an `alpn` query parameter. An ALPN value on a non-TLS connection is semantically meaningless (there is no TLS handshake to carry it) and will cause V2Ray/Xray cores to reject the configuration.
 :::
 
-## 🧩 Port-TLS-ALPN Compatibility Matrix
+## Port-TLS-ALPN Compatibility Matrix
 
 The three parameters form a strict invariant. Violating any constraint produces a broken configuration:
 
@@ -145,7 +145,7 @@ flowchart TD
 When customizing groups, always validate the invariant: TLS ports require `tls: true` + non-empty `alpn`, and HTTP ports require `tls: false` + empty `alpn`. A common misconfiguration is adding `"443"` to a non-TLS group's port array — this will produce links that appear valid but cannot establish connections.
 :::
 
-## 🛠️ Customizing Port Lists
+## Customizing Port Lists
 
 Port arrays are fully editable. Common customization scenarios:
 
@@ -175,7 +175,7 @@ When a single port is specified, the random selection at line 1099 always return
 
 **Adding redundancy with duplicate ports:** You can weight port selection by duplicating entries. With `ports: ["443", "443", "8443"]`, approximately 67% of configs will use port 443 and 33% will use port 8443.
 
-## 🌍 ALPN Beyond http/1.1
+## ALPN Beyond http/1.1
 
 While `"http/1.1"` is the only functional ALPN value for VLESS-WebSocket configurations in Harmony, the V2Ray/Xray core supports additional ALPN values for other transport types. The following table documents the full ALPN landscape for reference, but only `http/1.1` is compatible with Harmony's WebSocket transport:
 
@@ -192,7 +192,7 @@ While `"http/1.1"` is the only functional ALPN value for VLESS-WebSocket configu
 Attempting to set `alpn: "h2"` in a Harmony group will produce VLESS links that parse correctly but fail at connection time — the Xray core will negotiate HTTP/2 with Cloudflare's edge, which cannot upgrade an HTTP/2 stream to WebSocket.
 :::
 
-## 🔄 Complete Group Parameter Flow
+## Complete Group Parameter Flow
 
 The following diagram shows how `ports` and `alpn` flow from group definition through to the final VLESS URI:
 
@@ -222,5 +222,5 @@ flowchart LR
     end
 ```
 
-## 💠 Next Steps
-Now that you understand port and ALPN constraints, explore how clean IPs are sourced for these configurations in **[IP Data Sources](./8-ip-data-sources.md)**, or learn about the VLESS link assembly process in **[VLESS Link Builder](./11-vless-link-builder.md)**.  
+## Next Steps
+Now that you understand port and ALPN constraints, explore how clean IPs are sourced for these configurations in **[IP Data Sources](./8-ip-data-sources)**, or learn about the VLESS link assembly process in **[VLESS Link Builder](./11-vless-link-builder)**.  

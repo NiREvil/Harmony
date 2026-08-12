@@ -6,9 +6,6 @@ hero:
   name: "Harmony"
   text: "VLESS Proxy Subscription Generator"
   tagline: "A single-file Cloudflare Worker that automatically injects clean IPs into your VLESS configurations. Zero dependencies, 30+ configs per update, 3-second timeout guarantee."
-  image:
-    src: /Harmony.svg
-    alt: Harmony Logo
   actions:
     - theme: brand
       text: Get Started

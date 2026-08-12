@@ -28,6 +28,9 @@ head:
 
 # Path Obfuscation
 
+> ⏱️ 7 min · Level: <Badge type="warning" text="Intermediate" />  
+
+
 Path obfuscation is Harmony's built-in mechanism for randomizing the WebSocket path in every VLESS configuration it generates. Instead of broadcasting a static, predictable path like `/ws` or `/vless`, each subscription refresh produces a unique, non-guessable path — making automated probing and signature-based filtering significantly harder. The feature is configured directly inside each group's `path` field and requires zero additional dependencies.
 
 ## The `random:N` Syntax
@@ -39,7 +42,7 @@ The obfuscation is driven by a compact **`random:N`** token embedded in the grou
 | `/random:N` | Replace token with N random chars | `/random:18` | `/k7qm2bxf9p4jwnhta` |
 | `/random:N?params` | Token + preserved query string | `/random:14?ed=2048` | `/g5n3v8a1c9x2m7?ed=2048` |
 
-::: info `Entropy Calculation`
+::: info Entropy Calculation
 The `N` value determines the **entropy** of the generated path. Each character is chosen from a 36-character pool (26 letters + 10 digits), so a path of length `N` provides approximately **N × 5.17 bits** of entropy — enough to make brute-force discovery impractical at modest lengths.
 :::
 
@@ -77,7 +80,7 @@ function generateRandomPath(length) {
 }
 ```
 
-::: danger `Character Set Design`  
+::: danger Character Set Design
 The character set is intentionally lowercase-only (no uppercase) to avoid potential case-sensitivity issues on intermediate proxies or CDNs that may normalize paths. The inclusion of digits increases the pool size from 26 to 36 without introducing any URL-unsafe characters.
 :::
 
@@ -104,7 +107,7 @@ The `N` value in `random:N` controls a direct trade-off between obfuscation stre
 | 18 | ~93 | 1.0 × 10²⁸ | Strong; default for Groups 1 & 2 |
 | 24+ | ~124+ | 10³⁷+ | Overkill; adds URL length with diminishing returns |
 
-::: tip `Best Practice`
+::: tip Best Practice
 Values between **14 and 18** are the sweet spot. Going below 8 reduces the search space to a level where automated scanners could theoretically enumerate paths. Going above 24 provides negligible additional security while making the VLESS URL unnecessarily long — some clients may truncate very long URLs.
 :::
 
@@ -141,23 +144,23 @@ To modify the obfuscation for your deployment, edit the `path` field in any grou
 // worker.js — USER_SETTINGS.groups[0]
 {
   name: "Harmonyᵀᴸˢ",
-  host: "index.harmonica01.workers.dev",
-  sni: "index.harmonica01.workers.dev",
+  host: "index.harmony.workers.dev",
+  sni: "index.harmony.workers.dev",
   path: "/random:18",  // ← Change N here, or use a static path
   tls: true,
   // ...
 }
 ```
 
-::: info `Common Modifications`  
+::: info Common Modifications
 - **Increase entropy:** Change `/random:18` to `/random:24` for more randomness per config.
 - **Add a prefix:** Use `/api-random:12` to generate paths like `/api-k7qm2bxf9p4j`. The regex only matches `random:N`, so any surrounding text survives.
 - **Combine with query params:** Use `/random:16?ed=2048` to inject early-data alongside the obfuscated path, as Group 3 demonstrates.
 - **Disable for a group:** Set `path: "/ws"` or any static string without `random:` to skip obfuscation for that group only.
 :::
 
-## 💠 Next Steps
+## Next Steps
 
 With path obfuscation understood, the remaining anti-detection layer to explore is how Harmony mimics real browser connections:  
 
-- **[Fingerprint and Early Data](./16-fingerprint-and-early-data.md)** — Learn how `fp`, `ed`, and `eh` parameters make your VLESS connection's TLS handshake indistinguishable from a Chrome browser.  
+- **[Fingerprint and Early Data](./16-fingerprint-and-early-data)** — Learn how `fp`, `ed`, and `eh` parameters make your VLESS connection's TLS handshake indistinguishable from a Chrome browser.  

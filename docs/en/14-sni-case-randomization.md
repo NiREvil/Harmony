@@ -28,6 +28,8 @@ head:
 
 # SNI Case Randomization
 
+> ⏱️ 8 min · Level: <Badge type="warning" text="Intermediate" />  
+
 SNI Case Randomization is an anti-detection technique built into Harmony that transforms the Server Name Indication (SNI) field in TLS handshakes by randomly permuting the character casing of each letter. Because DNS is case-insensitive and TLS SNI comparison on Cloudflare's edge treats mixed-case hostnames as equivalent to their lowercase originals, this mutation is **functionally transparent** to the proxy connection — yet it produces a distinct byte-level fingerprint on every subscription refresh, making it significantly harder for network-level censors to pattern-match or block the connection based on a static SNI string.
 
 ## How It Works
@@ -65,15 +67,15 @@ For a hostname like `index.harmonica01.workers.dev`, the alphabetic characters a
 
 ## Practical Effects and Limitations
 
-::: danger `Why this works`
+::: tip Why this works
 Deep Packet Inspection (DPI) systems often rely on exact or substring matching against the SNI plaintext in the TLS ClientHello. A randomized case variant like `InDeX.hArMoNiCa01.wOrKeRs.dEv` will not match a rule looking for `index.harmonica01.workers.dev`, even though both resolve identically at the DNS and TLS layers. This is because the SNI field in the TLS specification (RFC 6066) carries the hostname as a literal byte string — case mutations produce different bytes.
 :::
 
-::: info `Why it's safe`
+::: info Why it's safe
 Cloudflare's edge validates the SNI by matching it against registered hostnames in a **case-insensitive** manner, consistent with DNS case-insensitivity (RFC 4343). The mixed-case SNI will be accepted and routed correctly to your Worker.
 :::
 
-::: danger `Limitations to be aware of`
+::: info Limitations to be aware of
 - **Not effective against domain-blocking censors** — A censor blocking all `*.workers.dev` will not be fooled by case randomization — the domain suffix is still present.
 - **Not effective against protocol-aware DPI** — Advanced DPI that normalizes SNI casing before matching will see through this technique.
 - **Non-TLS groups unaffected** — The `randomizeSni` flag is inert for non-TLS groups because no SNI field exists in the connection.
@@ -116,9 +118,9 @@ To toggle the feature, edit the `randomizeSni` property in the desired group wit
 
 After modifying the setting, redeploy the Worker for the change to take effect. Existing subscription links in clients will reflect the new behavior on the next subscription refresh.
 
-## 💠 Next Steps
+## Next Steps
 
 With SNI case randomization understood, you can explore the other anti-detection mechanisms that work alongside it:  
 
-- **[Path Obfuscation](./15-path-obfuscation.md)** — Randomizes the WebSocket path in each generated config, providing a second layer of variability in the connection signature.  
-- **[Fingerprint and Early Data](./16-fingerprint-and-early-data.md)** — Controls the TLS client fingerprint (`fp`) and early data parameters (`ed`/`eh`) that shape how the connection appears to middleboxes.  
+- **[Path Obfuscation](./15-path-obfuscation)** — Randomizes the WebSocket path in each generated config, providing a second layer of variability in the connection signature.  
+- **[Fingerprint and Early Data](./16-fingerprint-and-early-data)** — Controls the TLS client fingerprint (`fp`) and early data parameters (`ed`/`eh`) that shape how the connection appears to middleboxes.  

@@ -28,11 +28,11 @@ head:
 
 # Static IP Fallback Strategy
 
-> ⏱️ 9 min · 🔴 Level: Advanced
+> ⏱️ 9 min · Level: <Badge type="danger" text="Advanced" />  
 
 The **static IP fallback strategy** is Harmony's zero-dependency resilience layer — a hardcoded reservoir of ~870 Cloudflare clean IPs and domains embedded directly in `worker.js` that guarantees subscription generation even when external IP sources are unreachable. Unlike the dynamic pipelines that require outbound fetch requests, this strategy is **instantly available at runtime**, requires no network calls, and serves as both an explicit data source and an implicit safety net for the entire IP provisioning system.
 
-## ⚙️ How It Works: The Three-Phase Pipeline
+## How It Works: The Three-Phase Pipeline
 
 When a configuration group declares `dataSource: "static"`, the static IP list undergoes a deterministic three-phase transformation before IPs are injected into VLESS links:
 
@@ -60,7 +60,7 @@ flowchart LR
 
 <br/>
 
-## 🗂️ The Three Address Categories
+## The Three Address Categories
 
 The `staticIPs` array is a heterogeneous collection spanning three distinct address formats, each serving a specific purpose in the Cloudflare connectivity chain:
 
@@ -78,7 +78,7 @@ The dominant format in the static list is the **IPv6-mapped IPv4** notation `[::
 - `10` → `16`
 - `031f` → `3.31`
 
-::: danger INFO: `RUNTIME COMPATIBILITY`  
+::: danger RUNTIME COMPATIBILITY 
 This format is used because **Cloudflare Workers internally represent IPv4 addresses as IPv6-mapped addresses** when connecting through `fetch()`. Storing them in this format avoids conversion overhead and ensures direct compatibility with the Workers runtime networking stack.
 :::
 
@@ -86,7 +86,7 @@ This format is used because **Cloudflare Workers internally represent IPv4 addre
 
 Starting at line 720, the array transitions to domain names — well-known sites that are **behind Cloudflare's CDN**. When a VLESS client connects to `time.is` or `creativecommons.org`, Cloudflare's edge receives the TLS handshake with the Worker's hostname via SNI, and routes the WebSocket upgrade to the correct Worker. The client never directly resolves these domains; instead, the domain's Cloudflare-assigned IP becomes the effective clean IP.
 
-::: tip TIP: `ANYCAST PROPERTY`
+::: tip ANYCAST PROPERTY
 This approach leverages a fundamental property of Cloudflare's anycast network: **any domain on Cloudflare shares the same edge IP pools**. The domain is merely a vehicle to reach a Cloudflare edge that can proxy the connection to your Worker.
 :::
 
@@ -105,7 +105,7 @@ The final section (lines 747–971) contains **direct Cloudflare edge IPv4 addre
 
 These are the most straightforward entries — the VLESS client connects directly to the IP, bypassing DNS entirely. They represent **known-clean Cloudflare edge IPs** that are not blocked or throttled by the user's ISP.
 
-## 🎛️ Configuration: Activating the Static Strategy
+## Configuration: Activating the Static Strategy
 
 The static IP strategy is activated per-group through the `dataSource` property in `USER_SETTINGS.groups`. Group 3 in the default configuration demonstrates this:
 
@@ -133,11 +133,11 @@ The `dataSource` field accepts three values, each mapping to a key in the `ipDat
 | `"dynamic1"` | Fetch from NiREvil GitHub repo | GitHub raw CDN | ~200-500ms |
 | `"dynamic2"` | Fetch from Strawberry API | External API | ~200-500ms |
 
-::: tip TIP: `MIXED CONFIGURATION`
+::: tip MIXED CONFIGURATION
 Each group selects its data source **independently**. This means you can run a mixed configuration where Group 1 uses `dynamic1` for fresh IPs, Group 2 uses `dynamic2` for diversity, and Group 3 uses `static` as your always-available fallback — all within a single subscription response.
 :::
 
-## 🔄 The Runtime Resolution Flow
+## The Runtime Resolution Flow
 
 At request time, the worker constructs the `ipDataSources` map **after** attempting to fetch dynamic sources. The static list is always prepared regardless of whether dynamic fetches succeed or fail:
 
@@ -168,11 +168,11 @@ flowchart TD
     B64 --> Client
 ```
 
-::: warning ⚠️ `CRITICAL ARCHITECTURAL DETAIL`
+::: warning ⚠️ CRITICAL ARCHITECTURAL DETAIL
 The `static` key in `ipDataSources` is **unconditionally populated** at line 1047. While `dynamic1` and `dynamic2` can degrade to empty arrays if their fetches fail (the `.catch(() => ({ ipv4: [] }))` and `.catch(() => ({ data: [] }))` handlers), the static source is **always available**. This makes it the only data source that can never fail.
 :::
 
-## 🛡️ Why Static Fallback Exists: Failure Mode Analysis
+## Why Static Fallback Exists: Failure Mode Analysis
 
 The static IP strategy exists to counter a specific failure mode: **network-constrained environments where outbound fetch requests to GitHub or external APIs are blocked, throttled, or timing out**. In such conditions:
 
@@ -193,7 +193,7 @@ The static IP strategy exists to counter a specific failure mode: **network-cons
 For maximum resilience, keep at least one group on `dataSource: "static"` in your configuration. If all three groups use dynamic sources and the worker's runtime environment loses external connectivity, the subscription will return an empty configuration list — a complete outage that the static fallback prevents.
 :::
 
-## 🛠️ Customizing the Static IP List
+## Customizing the Static IP List
 
 The `staticIPs` array is fully editable. You can add or remove entries to match your region's clean IP landscape:
 
@@ -224,11 +224,11 @@ const staticIPs = [
 ];
 ```
 
-::: info INFO: `SAFE DUPLICATES`
+::: info SAFE DUPLICATES
 The deduplication step (`new Set()`) means adding duplicate entries is harmless — they'll be collapsed automatically. The shuffle step ensures that even if you add IPs in a fixed order, the output distribution varies per request.
 :::
 
-## ⚖️ Static vs. Dynamic: Strategic Trade-offs
+## Static vs. Dynamic: Strategic Trade-offs
 
 | Dimension | Static | Dynamic |
 | --- | --- | --- |
@@ -241,11 +241,11 @@ The deduplication step (`new Set()`) means adding duplicate entries is harmless 
 | **Worker CPU Cost** | Minimal (shuffle + dedup) | Minimal + fetch overhead |
 | **Deployment Complexity** | Zero — just deploy | Requires outbound fetch permissions |
 
-::: warning ⚠️ `STALENESS WEAKNESS`
+::: warning ⚠️ STALENESS WEAKNESS
 The static list's primary weakness is **staleness**: Cloudflare periodically rotates edge IPs, and ISPs may add IPs to blocklists. A static IP that was clean at deploy time may become dirty weeks later. This is why the default configuration uses `static` only for Group 3 — it's the emergency backup, not the primary IP source.
 :::
 
-::: tip `STATIC-ONLY DEPLOYMENT`
+::: tip STATIC-ONLY DEPLOYMENT
 For environments where you **cannot rely on external fetch** (e.g., Workers in restricted zones, or when you want zero-latency subscription generation), setting all groups to `dataSource: "static"` is a valid deployment pattern. Just plan to **redeploy the worker periodically** with an updated `staticIPs` array to refresh the pool.
 :::
 
@@ -253,6 +253,6 @@ For environments where you **cannot rely on external fetch** (e.g., Workers in r
 
 ## 💠 Next Steps
 
-- Understand how the dynamic sources complement this fallback: **[Dynamic IP Fetching Pipeline](./10-dynamic-ip-fetching-pipeline.md)**  
-- Learn how selected IPs become VLESS links: **[VLESS Link Builder](./11-vless-link-builder.md)**  
-- See how all groups merge into subscription output: **[Base64 Subscription Output](./12-base64-subscription-output.md)**  
+- Understand how the dynamic sources complement this fallback: **[Dynamic IP Fetching Pipeline](./10-dynamic-ip-fetching-pipeline)**  
+- Learn how selected IPs become VLESS links: **[VLESS Link Builder](./11-vless-link-builder)**  
+- See how all groups merge into subscription output: **[Base64 Subscription Output](./12-base64-subscription-output)**  

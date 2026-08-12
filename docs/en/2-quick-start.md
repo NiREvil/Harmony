@@ -30,7 +30,7 @@ head:
 
 # Quick Start
 
-> ⏱️ 8 min · 🟢 Level: Beginner
+> ⏱️ 8 min · Level: <Badge type="tip" text="Beginner" />  
 
 Get Harmony running in under five minutes. This page walks you through the essential steps: obtaining your VLESS credentials, customizing the worker script, deploying to Cloudflare, and using your subscription link. No prior experience with Cloudflare Workers is assumed.
 
@@ -40,7 +40,7 @@ Before you begin, ensure you have the following:
 
 | Requirement | Purpose | How to Obtain |
 | --- | --- | --- |
-| **Cloudflare account** | Hosts the Worker that generates subscriptions | cloudflare.com/sign-up |
+| **Cloudflare account** | Hosts the Worker that generates subscriptions | [cloudflare.com/sign-up][1] |
 | **An existing VLESS config** | Provides the **UUID** and **hostname** Harmony needs | Created via any VLESS worker (see below) |
 | **A proxy client** | Imports and uses the generated subscription link | v2rayN, NekoBox, Clash Meta, Streisand, etc. |
 
@@ -53,16 +53,16 @@ If you already have a working VLESS configuration, extract the **UUID** and **ho
 If you don't yet have a VLESS config, create one using any of these popular workers:
 
 | Worker Project | Description |
-| --- | --- |
-| **ZiZifn (Rust rewrite)** | Rust-based edgetunnel — fast and lightweight |
-| **BPB Worker Panel** | Feature-rich panel with UI management |
-| **cmliu/edgetunnel** | Community fork with additional transport options |
+| -------------- | ----- |
+| **[ZiZifn] (Rust rewrite)** | Rust-based edgetunnel — fast and lightweight |
+| **[BPB Worker Panel][BPB]** | Feature-rich panel with UI management |
+| **[Cmliu/edgetunnel][Cmliu]** | Community fork with additional transport options |
 
 Deploy one of these as a Cloudflare Worker first. Once it's running, copy the **UUID** (e.g. `a22bff60-a40a-4250-bde2-4c660e363b47`) and the **hostname** (e.g. `your-worker.your-subdomain.workers.dev`) from that config — you'll paste them into Harmony next.
 
-## Step 2 — Customize worker.js
+## Step 2 — Customize [worker.js]
 
-Download or copy the worker.js file from the repository, then make **three targeted edits** in the `USER_SETTINGS` object at the top of the file.
+Download or copy the [worker.js] file from the repository, then make **three targeted edits** in the `USER_SETTINGS` object at the top of the file.
 
 ### 2a. Replace the UUID
 
@@ -190,12 +190,19 @@ This produces **30 VLESS configurations** by default (10 per group × 3 groups),
 
 ::: info NOTE
 If dynamic IP sources are blocked in your region, the static IPs in Group 3 still provide a working fallback. You can also replace the static IPs in the `staticIPs` array (lines 102–971) with your own known-good addresses.
-:::
+::;
 
 ## Next Steps
 You now have a working Harmony subscription generating fresh VLESS configs with clean IPs. Here's where to go next:
 
-- **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers)** — production deployment best practices, custom domains, and routing
-- **[Architecture Overview](./4-architecture-overview)** — understand how the IP pipeline, link builder, and subscription encoder work together
-- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup)** — deep configuration of your identity parameters
-- **[IP Data Sources](./8-ip-data-sources)** — customize which clean IP sources Harmony fetches from
+- **[Deploy to Cloudflare Workers](./3-deploy-to-cloudflare-workers.md)** — production deployment best practices, custom domains, and routing
+- **[Architecture Overview](./4-architecture-overview.md)** — understand how the IP pipeline, link builder, and subscription encoder work together
+- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup.md)** — deep configuration of your identity parameters
+- **[IP Data Sources](./8-ip-data-sources.md)** — customize which clean IP sources Harmony fetches from
+
+
+[1]: https://dash.cloudflare.com/?to=/:account/workers-and-pages
+[worker.js]: https://github.com/NiREvil/Harmony/blob/main/worker.js
+[ZiZifn]: https://github.com/NiREvil/zizifn
+[BPB]: https://github.com/bia-pain-bache/BPB-Worker-Panel
+[Cmliu]: https://github.com/cmliu/edgetunnel

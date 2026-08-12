@@ -28,7 +28,7 @@ head:
 
 # Architecture Overview
 
-> ⏱️ 10 min · 🟡 Level: Intermediate
+> ⏱️ 10 min · Level: <Badge type="warning" text="Intermediate" />  
 
 Harmony is a **single-file Cloudflare Workers application** that operates as a VLESS subscription generator — it does not proxy traffic itself, but rather produces ready-to-import configuration payloads that V2Ray/Xray-compatible clients consume. When a client hits the worker URL, Harmony executes a complete pipeline: fetch clean IPs → generate VLESS links per configuration group → encode as Base64 → serve with subscription metadata headers. This page dissects that pipeline, the data model, and the execution model that binds them together.
 
@@ -242,4 +242,4 @@ Now that you understand the end-to-end architecture, dive into the configuration
 
 → **[UUID and Hostname Setup](./6-uuid-and-hostname-setup)** — Replace the default identity parameters  
 
-→ **[IP Data Sources](./8-ip-data-sources.md)** — Deep dive into how each IP source works and when to prefer one over another  
+→ **[IP Data Sources](./8-ip-data-sources)** — Deep dive into how each IP source works and when to prefer one over another  

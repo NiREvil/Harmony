@@ -28,6 +28,8 @@ head:
 
 # Fingerprint and Early Data
 
+> ⏱️ 8 min · Level: <Badge type="danger" text="Advanced" />  
+
 Harmony employs two synergistic anti-detection mechanisms — **TLS client fingerprinting** and **WebSocket early data** — that operate at different layers of the connection handshake to make VLESS traffic appear indistinguishable from legitimate browser-originated WebSocket sessions. Together, they close the two most common detection surfaces used by Deep Packet Inspection (DPI) systems: the TLS ClientHello fingerprint mismatch and the WebSocket upgrade timing anomaly.
 
 ## TLS Client Fingerprint (`fp`)
@@ -72,7 +74,7 @@ fp: ["chrome", "firefox", "safari", "edge", "android", "ios", "360", "qq", "rand
 
 The **early data** mechanism is a performance optimization that also doubles as a timing-based anti-detection feature. In a standard WebSocket upgrade, the client must wait for the HTTP 101 Switching Protocols response before sending any application data. This creates a visible timing gap between the TLS handshake completion and the first data packet — a pattern that DPI systems can statistically detect as proxy behavior.
 
-Early data (specified via the `ed` parameter) allows the VLESS client to **piggyback initial payload bytes onto the WebSocket upgrade request itself**, eliminating the inter-handshake silence. The server reads these bytes from the upgrade request headers before the WebSocket is formally established, effectively merging the connection setup and first data transmission into a single round-trip.
+Early data (specified via the `ed` parame⁴ter) allows the VLESS client to **piggyback initial payload bytes onto the WebSocket upgrade request itself**, eliminating the inter-handshake silence. The server reads these bytes from the upgrade request headers before the WebSocket is formally established, effectively merging the connection setup and first data transmission into a single round-trip.
 
 ### Global Configuration
 
@@ -95,13 +97,13 @@ const queryParams = new URLSearchParams({
 
 ### Why `ed: 2560`?
 
-::: info `Rationale behind the value`
+::: info Rationale behind the value
 The value **2560** is not arbitrary — it represents the maximum number of bytes that can be encoded into a `Sec-WebSocket-Protocol` header within standard HTTP header size limits (typically 8 KiB for the entire header block). The Base64 encoding used to embed the early data inflates the byte count by approximately 4/3, so 2560 raw bytes become ~3414 encoded characters — comfortably within header limits while maximizing the amount of data that bypasses the round-trip penalty.
 :::
 
 The `eh` (early data header) value of `"Sec-WebSocket-Protocol"` is chosen because this header is **semantically expected** in any WebSocket upgrade request. DPI systems that inspect headers will see a normal WebSocket protocol negotiation rather than a suspicious custom header, preserving the traffic's resemblance to legitimate WebSocket usage.
 
-::: danger Modifying `ed`
+::: info Modifying `ed`
 Modifying `ed` to a value significantly different from 2560 risks header overflow (too large) or degraded performance (too small). Values within ±512 of the default are generally safe, but the default has been empirically validated as optimal for the Xray/sing-box cores used with these configurations.
 :::
 
@@ -121,7 +123,7 @@ When this path is processed by `createVlessLink`, the `random:14` segment is rep
 vless://uuid@ip:443?path=/a7x9k2m4p1q8w3?ed=2048&...&ed=2560&eh=Sec-WebSocket-Protocol
 ```
 
-::: info `Cross-Compatibility`
+::: info Cross-Compatibility
 Note that this results in **two `ed` values** in the URL — one in the path (for Xray) and one as a query parameter (for sing-box). Clients parse whichever their core supports, making the configuration cross-compatible.
 :::
 
@@ -159,10 +161,10 @@ Every parameter serves a distinct anti-detection role: `fp` masks the TLS finger
 
 <br/>
 
-## 💠 Next Steps
+## Next Steps
 
 The fingerprint and early data mechanisms work in concert with Harmony's other anti-detection features. To understand the full anti-detection pipeline:  
 
-- **[SNI Case Randomization](./14-sni-case-randomization.md)** — How randomized SNI casing prevents domain-based blocking
-- **[Path Obfuscation](./15-path-obfuscation.md)** — How random path segments prevent pattern-matching detection
-- **[VLESS Link Builder](./11-vless-link-builder.md)** — The complete link generation pipeline that assembles all parameters
+- **[SNI Case Randomization](./14-sni-case-randomization)** — How randomized SNI casing prevents domain-based blocking
+- **[Path Obfuscation](./15-path-obfuscation)** — How random path segments prevent pattern-matching detection
+- **[VLESS Link Builder](./11-vless-link-builder)** — The complete link generation pipeline that assembles all parameters

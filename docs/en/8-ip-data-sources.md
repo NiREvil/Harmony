@@ -28,11 +28,11 @@ head:
 
 # IP Data Sources
 
-> ⏱️ 8 min · 🟡 Level: Intermediate
+> ⏱️ 8 min · Level: <Badge type="warning" text="Intermediate" />  
 
 Harmony's IP data pipeline is the mechanism that supplies **clean Cloudflare IPs** to each VLESS configuration group. Rather than relying on a single source, the system implements a **three-tier source architecture** — two dynamic remote APIs and one hardcoded static fallback — so that subscription generation remains resilient even when external services are unreachable. Each configuration group independently declares which source it consumes via the `dataSource` property, giving you per-group control over IP provenance and freshness.
 
-## 🏗️ Source Architecture Overview
+## Source Architecture Overview
 
 The three sources are not independent alternatives in a fallback chain; instead, each group **binds to exactly one source** at configuration time. This design trades automatic redundancy for explicit control — you always know where a group's IPs originated.
 
@@ -71,7 +71,7 @@ flowchart TD
 
 <br/>
 
-## 🌐 The Three Sources
+## The Three Sources
 
 ### `dynamic1` — NiREvil GitHub Repository
 
@@ -100,7 +100,7 @@ This source is a self-hosted aggregation API that collects clean Cloudflare IPs 
 | **Extraction path** | `response.data[].ipv4` |
 | **Update frequency** | Continuous (aggregation API) |
 
-::: info NOTE: SCHEMA DIVERGENCE
+::: info SCHEMA DIVERGENCE
 Because the two dynamic sources use **different response schemas**, the extraction logic branches: `dynamic1` maps over `.ipv4[].ip` while `dynamic2` maps over `.data[].ipv4`. This schema divergence is intentional — it ensures that a structural change in one API cannot break both sources simultaneously.
 :::
 
@@ -120,11 +120,11 @@ This source requires **zero network requests** and is therefore immune to fetch 
 | **Network dependency** | None |
 | **Primary role** | Fallback when dynamic sources fail |
 
-::: danger INFO: ZERO-LATENCY RESOLUTION
+::: danger ZERO-LATENCY RESOLUTION
 The static IP list is not merely a backup — assigning `dataSource: "static"` to a group guarantees **zero-latency IP resolution** since no external fetch occurs. This makes it ideal for emergency groups where reliability trumps freshness.
 :::
 
-## 🔗 Source-to-Group Binding
+## Source-to-Group Binding
 
 Each group in `USER_SETTINGS.groups` declares its source via the `dataSource` property. The default configuration distributes sources across groups for maximum diversity:
 
@@ -138,7 +138,7 @@ Each group in `USER_SETTINGS.groups` declares its source via the `dataSource` pr
 This distribution ensures that a failure in any **single** external source still leaves two groups operational with IPs from the remaining sources.
 :::
 
-## ⚙️ Fetch and Processing Pipeline
+## Fetch and Processing Pipeline
 
 When a subscription request arrives, the worker executes the following pipeline:
 
@@ -174,7 +174,7 @@ flowchart TD
 
 6.  **Per-group consumption** — Each group reads from its bound source and takes up to `ipCount` (default: 10) unique IPs, generating one VLESS link per IP.
 
-## 🛠️ Configuring a Custom Source
+## Configuring a Custom Source
 
 To assign a different source to a group, modify the `dataSource` property in the group definition:
 
@@ -194,7 +194,7 @@ The valid values for `dataSource` are exactly the keys present in the `ipDataSou
 
 To add a brand-new dynamic source, you must define its URL in `ipSourceURLs`, add a fetch+extraction step in the `handleRequest` function, and register it in the `ipDataSources` object. The `dataSource` property in groups will then accept the new key as a valid value.
 
-## 📋 Response Schema Reference
+## Response Schema Reference
 
 The `cf-clean.json` file provides a local reference for the `dynamic1` schema. Each entry in its `ipv4` array follows this structure:
 
@@ -207,7 +207,7 @@ The `cf-clean.json` file provides a local reference for the `dynamic1` schema. E
 | `is_ir` | `boolean` | Whether the domain is Iranian-origin (`true`) or generic (`false`) |
 | `protocol_version` | `string` | TLS protocol version, typically `"TLSv1.3"` |
 
-## 📊 Source Comparison Summary
+## Source Comparison Summary
 
 | Characteristic | `static` | `dynamic1` | `dynamic2` |
 | --- | --- | --- | --- |
@@ -219,6 +219,6 @@ The `cf-clean.json` file provides a local reference for the `dynamic1` schema. E
 | **IPv6-mapped format** | Yes (`[::ffff:...]`) | No (plain IPv4) | No (plain IPv4) |
 | **Best used for** | Emergency/fallback groups | Primary TLS groups | Primary non-TLS groups |
 
-## 💠 Next Steps
+## Next Steps
 
-Learn how the static IP list is curated and how to customize it for your region in **[Static IP Fallback Strategy](./9-static-ip-fallback-strategy.md)**, or explore the runtime fetch mechanics in depth at **[Dynamic IP Fetching Pipeline](./10-dynamic-ip-fetching-pipeline.md)**.  
+Learn how the static IP list is curated and how to customize it for your region in **[Static IP Fallback Strategy](./9-static-ip-fallback-strategy)**, or explore the runtime fetch mechanics in depth at **[Dynamic IP Fetching Pipeline](./10-dynamic-ip-fetching-pipeline)**.  

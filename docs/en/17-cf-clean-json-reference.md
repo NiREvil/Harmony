@@ -28,6 +28,8 @@ head:
 
 # cf-clean.json Reference
 
+> ⏱️ 7 min · Level: <Badge type="danger" text="Advanced" />  
+
 **cf-clean.json** is Harmony's local clean IP database — an 18,000+ line structured snapshot of Cloudflare edge IPs that have been verified as clean (unblocked) for VLESS proxy traffic. It defines the canonical schema that the `dynamic1` fetching pipeline consumes at runtime from the upstream repository, and it serves as the authoritative reference for understanding every field that flows through Harmony's IP selection system.
 
 ## Top-Level Structure
@@ -48,7 +50,7 @@ The file is a single JSON object with three root keys. The `ipv4` array is the p
 }
 ```
 
-::: info `Naming Convention`
+::: info Naming Convention
 Despite the `ipv4` key name, each entry carries **both** IPv4 and IPv6 address data alongside domain and protocol metadata — the key name reflects that the array's primary selection axis is the IPv4 address.
 :::
 
@@ -75,11 +77,11 @@ The extraction occurs in a single chained operation at line 1042:
 const ipListRE1 = (ipv4listRE1.ipv4 || []).map((ipData) => ipData.ip).filter((ip) => ip);
 ```
 
-::: danger `Discarded Fields`
+::: danger Discarded Fields
 This means: access the `ipv4` array → map each entry to its `.ip` string → filter out any falsy values. The remaining fields (`domain`, `ipv6`, `short_ipv6`, `is_ir`, `protocol_version`) are **discarded** during the dynamic pipeline execution. They exist in the JSON for offline analysis, debugging, and potential future use.
 :::
 
-::: info `Dynamic vs Local`
+::: info Dynamic vs Local
 The `dynamic1` URL in worker.js does **not** point to `cf-clean.json` in this repository — it fetches from `https://raw.githubusercontent.com/NiREvil/vless/refs/heads/main/Cloudflare-IPs.json`, which follows the identical schema but is updated every 6 hours. The local `cf-clean.json` is the schema reference and offline snapshot.
 :::
 
@@ -105,7 +107,7 @@ The `domain` field in cf-clean.json entries falls into three distinct categories
 | **Workers.dev subdomains** | `.workers.dev` | `false` | ~5% | `0x00.serpents.workers.dev`, `0.royal-di.workers.dev` |
 | **International sites** | `.com`, `.io`, `.org` | `true`* | ~10% | `codepen.io`, `nodejs.org`, `harbor.io`, `fbi.gov` |
 
-::: danger Understanding the `is_ir` Flag
+::: tip Understanding the `is_ir` Flag
 * International domains are marked `is_ir: true` when they have been verified accessible from Iranian networks — the flag signals *regional reachability*, not TLD ownership. The heavy weighting toward `.ir` domains is intentional: these are Cloudflare-proxied Iranian websites whose edge IPs are known to route cleanly from within Iran's network, making them the most reliable candidates for the `dynamic1` pipeline.
 :::
 
@@ -126,7 +128,7 @@ The `ipv6` field shows two address families: Cloudflare's `2606:4700:...` global
 
 The `short_ipv6` field uses the **IPv4-mapped IPv6 address** format defined in RFC 4291: `::ffff:w.x.y.z` where `w.x.y.z` is the original IPv4 address encoded in hex. This format is what the `staticIPs` array in worker.js wraps in brackets (`[::ffff:XXXX]`) for IPv6 socket binding.
 
-::: info `Decoding Example`
+::: info Decoding Example
 For example, decoding `::ffff:6810:31f`:
 - Split into bytes: `68` `10` `03` `1f`
 - Convert to decimal: `104` `16` `3` `31`
@@ -144,13 +146,13 @@ The metadata fields track when the database was last regenerated:
 "last_timestamp": 1785418102
 ```
 
-::: info `Sync with Subscription Headers`
+::: info Sync with Subscription Headers
 The upstream source (fetched by `dynamic1`) is refreshed every **6 hours**, which aligns with the `Profile-Update-Interval: 6` header that worker.js returns in subscription responses. This ensures that clients pulling fresh subscriptions will always receive IPs from a database no older than 6 hours — critical because Cloudflare edge IP cleanliness can change as routing policies or blocklists are updated.
 :::
 
 ## Schema Validation Summary
 
-::: danger `Complete Validation Contract`
+::: danger Complete Validation Contract
 For any consumer implementing a parser or validator for this format, the complete contract is:
 
 | Rule | Constraint |

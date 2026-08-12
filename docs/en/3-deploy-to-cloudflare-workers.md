@@ -28,13 +28,13 @@ head:
 
 # Deploy to Cloudflare Workers
 
-> ⏱️ 8 min · 🟢 Level: Beginner
+> ⏱️ 8 min · Level: <Badge type="tip" text="Beginner" />  
 
 Harmony deploys as a single-file Cloudflare Worker — no build tools, no dependencies, no wrangler config. You edit `worker.js` in-place, paste it into the Cloudflare dashboard, and the resulting Worker URL becomes your live VLESS subscription endpoint. Every time a client calls "Update Subscriptions", the Worker re-fetches fresh clean IPs and regenerates all configurations on the fly.
 
-## 📋 Prerequisites
+## Prerequisites
 
-Before you begin the deployment, you need two pieces of information extracted from an **existing VLESS proxy Worker** (created separately via tools like ZiZifn, BPB, or CMLiu):
+Before you begin the deployment, you need two pieces of information extracted from an **existing VLESS proxy Worker** (created separately via tools like [ZiZifn], [BPB], or [CMLiu]):
 
 | Prerequisite | What It Is | Where to Find It |
 | --- | --- | --- |
@@ -43,7 +43,7 @@ Before you begin the deployment, you need two pieces of information extracted fr
 
 If you don't yet have a VLESS proxy Worker, create one first using any compatible generator, then return here. Harmony is a **subscription generator** — it wraps your existing proxy endpoint with automatic clean IP injection.
 
-##  Deployment Flow
+## Deployment Flow
 
 The entire process follows a linear path from download to live subscription:
 
@@ -85,7 +85,7 @@ The `groups` array contains three configuration groups by default. Each group's 
 
 <br/>
 
-::: info NOTE
+::: info non-TLS
 For Group 2 (non-TLS/TCP), the `sni` field **must stay empty** — this is not a placeholder. Non-TLS configurations do not use Server Name Indication. Only replace the `host` value on line 69.
 :::
 
@@ -146,7 +146,7 @@ Paste the Worker URL as a **subscription link** in any VLESS-compatible client (
 3. Generates `ipCount` VLESS configs per group (default: 10 × 3 groups = **30 configs**)
 4. Returns a Base64-encoded subscription with fake usage headers
 
-## ⚙️ Configuration Quick Reference
+## Configuration Quick Reference
 
 The `USER_SETTINGS` object controls all behavior. Here is a summary of every field you may want to change:
 
@@ -173,7 +173,7 @@ Each **group** object supports these fields:
 | `randomizeSni` | Yes | Randomize SNI casing for anti-detection | SNI Case Randomization |
 | `allowInsecure` | No | Skip TLS verification (`false` recommended) | — |
 
-## 🔧 Troubleshooting
+## Troubleshooting
 
 | Symptom | Likely Cause | Fix |
 | --- | --- | --- |
@@ -185,15 +185,11 @@ Each **group** object supports these fields:
 | Configs show wrong hostname | `host` not replaced in all groups | Replace `host` in **every** group object (lines 55, 69, 83) |
 
 
-<br/>
-
-::: danger IF
+::: danger Fu★★d up
 If you accidentally corrupt the file, the safest recovery is to re-download a clean `worker.js` from the repository and re-apply only the UUID and hostname edits. The remaining 1100+ lines (IP lists, fetch logic, link builder) should never be manually modified.
 :::
 
-<br/>
-
-## 💠 Next Steps
+## Next Steps
 Your Harmony Worker is now live. To go deeper into configuration and optimization:
 
 - **[Architecture Overview](./4-architecture-overview)** — understand how the fetch pipeline, IP sources, and link builder interact

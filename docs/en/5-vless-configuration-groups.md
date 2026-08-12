@@ -28,11 +28,11 @@ head:
 
 # VLESS Configuration Groups
 
-> ⏱️ 12 min · 🟡 Level: Intermediate
+> ⏱️ 12 min · Level: <Badge type="warning" text="Intermediate" />  
 
 Configuration groups are the **central architectural pattern** in Harmony — they define how VLESS proxy configurations are generated, grouped, and differentiated. Each group acts as an independent blueprint that controls its own hostname, TLS mode, ports, IP source, and anti-detection behavior. When the worker receives a subscription request, it iterates over every group, fetches clean IPs from that group's designated source, and emits `ipCount` VLESS links per group — yielding 30 total configurations by default (3 groups × 10 IPs).
 
-## 🎛️ The USER_SETTINGS Object
+## The USER_SETTINGS Object
 
 All user-configurable state lives inside the `USER_SETTINGS` constant at the top of `worker.js`. It contains three categories of settings: **global identity** (UUID), **global output controls** (`ipCount`, Early Data), and the **groups array** itself.
 
@@ -44,11 +44,11 @@ All user-configurable state lives inside the `USER_SETTINGS` constant at the top
 | `eh` | 39 | `string` | `"Sec-WebSocket-Protocol"` | Early Data header name |
 | `groups` | 51 | `array` | 3 groups | Array of group definition objects |
 
-::: tip TIP
+::: tip **ipCount**
 Changing `ipCount` from 10 to 20 would produce 60 total configs (3 groups × 20). The total output scales linearly with both `ipCount` and the number of groups in the array.
 :::
 
-## 📋 Group Object Schema
+## Group Object Schema
 
 Each element in the `groups` array is an object with a fixed set of properties. Understanding this schema is essential before customizing or extending groups.
 
@@ -66,7 +66,7 @@ Each element in the `groups` array is an object with a fixed set of properties. 
 | `dataSource` | `string` | ✅ | IP data source key: `"static"`, `"dynamic1"`, or `"dynamic2"`. |
 | `randomizeSni` | `boolean` | ✅ | When `true`, each config's SNI gets random uppercase/lowercase casing for anti-detection. |
 
-## 📦 Default Groups Breakdown
+## Default Groups Breakdown
 
 Harmony ships with three preconfigured groups, each serving a distinct network topology. The following diagram illustrates how they relate to IP sources and the final subscription output:
 
@@ -77,8 +77,8 @@ This is the **primary TLS-encrypted group** intended for standard WebSocket-over
 | Property | Value | Rationale |
 | --- | --- | --- |
 | `name` | `"Harmonyᵀᴸˢ"` | Unicode superscript tags help visually distinguish groups in client UIs |
-| `host` | `"index.harmonica01.workers.dev"` | Workers.dev hostname for the primary proxy worker |
-| `sni` | `"index.harmonica01.workers.dev"` | SNI matches host (standard for Workers-based configs) |
+| `host` | `"index.harmony.workers.dev"` | Workers.dev hostname for the primary proxy worker |
+| `sni` | `"index.harmony.workers.dev"` | SNI matches host (standard for Workers-based configs) |
 | `path` | `"/random:18"` | 18 random characters — fresh path per config for obfuscation |
 | `tls` | `true` | TLS required for secure transport |
 | `ports` | `["443","8443","2053","2083","2087","2096"]` | All Cloudflare-supported TLS ports |
@@ -94,7 +94,7 @@ This group operates **without TLS encryption**, using plain TCP WebSocket connec
 | Property | Value | Rationale |
 | --- | --- | --- |
 | `name` | `"Harmonyᵀᶜᴾ"` | TCP identifier in client UIs |
-| `host` | `"index.harmonica02.workers.dev"` | Separate Workers hostname for TCP proxy |
+| `host` | `"index.harmony02.workers.dev"` | Separate Workers hostname for TCP proxy |
 | `sni` | `""` | **Must be empty** — SNI is a TLS concept |
 | `path` | `"/random:18"` | Same obfuscation strategy as Group 1 |
 | `tls` | `false` | No TLS — plaintext WebSocket |
@@ -121,11 +121,11 @@ This group serves as a **fallback TLS configuration** using static (hardcoded) c
 | `dataSource` | `"static"` | Hardcoded IPs from `staticIPs` array — no network fetch needed |
 | `randomizeSni` | `true` | SNI randomization enabled |
 
-::: info NOTE
+::: info Static IPs
 Group 3's `dataSource: "static"` means it never triggers a network fetch — its IPs come from the `staticIPs` array hardcoded in worker.js (lines 102–971). This makes it the most resilient group when external APIs are unreachable.
 :::
 
-## ⚙️ How Groups Are Processed at Runtime
+## How Groups Are Processed at Runtime
 
 The runtime processing logic in `handleRequest` reveals the exact execution model. When a client requests the subscription URL, the worker:
 
@@ -138,7 +138,7 @@ The runtime processing logic in `handleRequest` reveals the exact execution mode
 The key insight is that **each group is independently self-contained**: it specifies its own IP source, ports, TLS mode, and hostname. There is no cross-group dependency or IP sharing unless two groups reference the same `dataSource` value.
 :::
 
-## 🔗 VLESS Link Generation Per Group
+## VLESS Link Generation Per Group
 
 The `createVlessLink` function translates a single group + IP pair into a complete VLESS URI. Here is the exact algorithm:
 
@@ -152,10 +152,10 @@ The `createVlessLink` function translates a single group + IP pair into a comple
 The resulting VLESS link for a TLS group with all defaults would look like:
 
 ```text
-vless://a22bff60-...@104.16.92.209:443?path=/a7x9k2...&encryption=none&type=ws&host=index.harmonica01.workers.dev&fp=chrome&ed=2560&eh=Sec-WebSocket-Protocol&security=tls&sni=iNdEx.haRMonICA01.wOrkeRS.dEV&alpn=http/1.1#Harmony%E1%B5%80%E1%B4%B8%CB%A2
+vless://a22bff60-...@104.16.92.209:443?path=/a7x9k2...&encryption=none&type=ws&host=index.harmony.workers.dev&fp=chrome&ed=2560&eh=Sec-WebSocket-Protocol&security=tls&sni=iNdEx.haRMony.wOrkeRS.dEV&alpn=http/1.1#Harmony%E1%B5%80%E1%B4%B8%CB%A2
 ```
 
-## 🛠️ Customizing and Extending Groups
+## Customizing and Extending Groups
 
 The groups array is designed for full flexibility — you can **add, remove, or modify** groups to match your deployment topology.
 
@@ -200,7 +200,7 @@ These constraints are critical and ignoring them will cause client errors or bro
 | `path` with `?ed=` conflicts with global `ed` | Group 3 uses `?ed=2048` in path for Xray-core; avoid this if your client reads `ed` from query params |
 | `fp` currently limited to `["chrome"]` | Other fingerprints (firefox, safari, edge) do not work reliably with Workers WebSocket |
 
-## 📌 Group Property Quick Reference
+## Group Property Quick Reference
 
 For rapid lookup when editing `worker.js`, here are the exact line numbers for each default group's properties:
 
@@ -218,9 +218,9 @@ For rapid lookup when editing `worker.js`, here are the exact line numbers for e
 | `dataSource` | Line 63 | Line 77 | Line 91 |
 | `randomizeSni` | Line 64 | Line 78 | Line 92 |
 
-## 💠 Next Steps
+## Next Steps
 Now that you understand how configuration groups define the structure and behavior of your VLESS output, explore the specific properties in detail:  
 
-- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup.md)** — How to extract and replace the UUID and host values from your existing VLESS config
-- **[Ports and ALPN Settings](./7-ports-and-alpn-settings.md)** — Deep dive into Cloudflare's allowed port ranges and ALPN protocol constraints
-- **[IP Data Sources](./8-ip-data-sources.md)** — How the three IP source modes (`static`, `dynamic1`, `dynamic2`) work and when to use each
+- **[UUID and Hostname Setup](./6-uuid-and-hostname-setup)** — How to extract and replace the UUID and host values from your existing VLESS config
+- **[Ports and ALPN Settings](./7-ports-and-alpn-settings)** — Deep dive into Cloudflare's allowed port ranges and ALPN protocol constraints
+- **[IP Data Sources](./8-ip-data-sources)** — How the three IP source modes (`static`, `dynamic1`, `dynamic2`) work and when to use each
