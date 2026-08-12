@@ -25,7 +25,7 @@
 ‏<summary><strong> توضیحات پیرامون ساخت کانفیگ </strong></summary>
 
   <br/>
-  
+
 ## 1. ایجاد کانفیگ Vless
 
 ### [ZiZifn (Rust-wsam)][ZiF]
@@ -137,6 +137,8 @@
 
 با هربار انجام این عمل، 30 عدد کانفیگ جدید با IP های تمیز به کلاینت شما اضافه خواهد شد.
 
+<br><br/>
+
 > [!CAUTION]
 >
 > برای شخصی‌سازی بیشتر، لطفاً توضیحات زیر را بخوانید.
@@ -147,6 +149,8 @@
 > <br/>
 
 <div dir="rtl">
+
+<br><br/>
 
 <details>
 <summary><strong>📦 توضیحات غیرضروری</strong></summary>
@@ -240,7 +244,9 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 ## 8. Merging
 
 و آخرین نکته، گفتم که سه تا دسته 10 تایی کانفیگ داریم تو خروجی این کد، می‌تونید واسه هر دسته یه کانفیگ متفاوت قرار بدید، مثلا واسه دسته اول Host و SNI از کانفیگی که با کد BPB ساختید واسه دسته دوم هاست و sni کانفیگی که با کد فرضا Edtunnel ساختید رو قرار بدید و واسه دسته سوم هر هاست‌نیم و sni کانفیگ دیگه ای رو، ولی به یک شرط، به شرطی که واسه همه‌ی این سه تا از یک UUID استفاده کرده باشید، UUID همشون باید مشترک باشه و همونم تو لاین [32] کد قرار داشته باشه.  
-[![zread](https://img.shields.io/badge/Ask_Zread-_.svg?style=plastic&color=00b0aa&labelColor=000000&logo=data%3Aimage%2Fsvg%2Bxml%3Bbase64%2CPHN2ZyB3aWR0aD0iMTYiIGhlaWdodD0iMTYiIHZpZXdCb3g9IjAgMCAxNiAxNiIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTQuOTYxNTYgMS42MDAxSDIuMjQxNTZDMS44ODgxIDEuNjAwMSAxLjYwMTU2IDEuODg2NjQgMS42MDE1NiAyLjI0MDFWNC45NjAxQzEuNjAxNTYgNS4zMTM1NiAxLjg4ODEgNS42MDAxIDIuMjQxNTYgNS42MDAxSDQuOTYxNTZDNS4zMTUwMiA1LjYwMDEgNS42MDE1NiA1LjMxMzU2IDUuNjAxNTYgNC45NjAxVjIuMjQwMUM1LjYwMTU2IDEuODg2NjQgNS4zMTUwMiAxLjYwMDEgNC45NjE1NiAxLjYwMDFaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00Ljk2MTU2IDEwLjM5OTlIMi4yNDE1NkMxLjg4ODEgMTAuMzk5OSAxLjYwMTU2IDEwLjY4NjQgMS42MDE1NiAxMS4wMzk5VjEzLjc1OTlDMS42MDE1NiAxNC4xMTM0IDEuODg4MSAxNC4zOTk5IDIuMjQxNTYgMTQuMzk5OUg0Ljk2MTU2QzUuMzE1MDIgMTQuMzk5OSA1LjYwMTU2IDE0LjExMzQgNS42MDE1NiAxMy43NTk5VjExLjAzOTlDNS42MDE1NiAxMC42ODY0IDUuMzE1MDIgMTAuMzk5OSA0Ljk2MTU2IDEwLjM5OTlaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik0xMy43NTg0IDEuNjAwMUgxMS4wMzg0QzEwLjY4NSAxLjYwMDEgMTAuMzk4NCAxLjg4NjY0IDEwLjM5ODQgMi4yNDAxVjQuOTYwMUMxMC4zOTg0IDUuMzEzNTYgMTAuNjg1IDUuNjAwMSAxMS4wMzg0IDUuNjAwMUgxMy43NTg0QzE0LjExMTkgNS42MDAxIDE0LjM5ODQgNS4zMTM1NiAxNC4zOTg0IDQuOTYwMVYyLjI0MDFDMTQuMzk4NCAxLjg4NjY0IDE0LjExMTkgMS42MDAxIDEzLjc1ODQgMS42MDAxWiIgZmlsbD0iI2ZmZiIvPgo8cGF0aCBkPSJNNCAxMkwxMiA0TDQgMTJaIiBmaWxsPSIjZmZmIi8%2BCjxwYXRoIGQ9Ik00IDEyTDEyIDQiIHN0cm9rZT0iI2ZmZiIgc3Ryb2tlLXdpZHRoPSIxLjUiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIvPgo8L3N2Zz4K&logoColor=ffffff)](https://zread.ai/NiREvil/Harmony)
+
+**[توضیحات بیشتر برای علاقه‌مندان، خیلی بیشتر][docs]** 🤪  
+
 
 **کنجکاو باشید 🩶🪐**
 
@@ -269,6 +275,7 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 [BPB]: https://github.com/bia-pain-bache/BPB-Worker-Panel
 [CMLIU]: https://github.com/cmliu/edgetunnel
 [max]: https://t.me/NiREvil_GP/198128
+[docs]: https://nirevil.github.io/Harmony
 [2]: https://www.uuidgenerator.net
 [3]: https://github.com/NiREvil/vless/blob/main/sub/ProxyIP.md
 [4]: https://scamalytics.com/ip/api/enquiry?monthly_api_calls=5000

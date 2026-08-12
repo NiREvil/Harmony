@@ -1,6 +1,6 @@
 /**
  * Harmony - VLESS Subscription Generator for Cloudflare Workers
- * - Last Update: Thu, July 30, 2026, 04:20 UTC
+ * - Last Update: Wed, Aug 12, 2026, 04:20 UTC
  * - https://github.com/NiREvil/Harmony
  *
  * This worker builds a V2Ray subscription link with the ability to automatically add
@@ -717,9 +717,10 @@ const staticIPs = [
   "[::ffff:c7d4:5a31]",
   "[::ffff:c7d4:5a46]",
 
-  "zzula.ir",
+  "zula.ir",
   "fbi.gov",
   "time.is",
+  "unpkg.com",
   "lb.nscl.ir",
   "icook.hk",
   "harbor.io",
@@ -732,18 +733,17 @@ const staticIPs = [
   "jsdelivr.com",
   "medium.com",
   "www.wto.org",
-  "cf.090227.xyz",
   "www.visa.com",
   "singapore.com",
   "go.inmobi.com",
-  "singapore.com",
   "go.inmobi.com",
   "www.cdnjs.com",
-  "cfip.xxxxxxxx.tk",
-  "cfip.1323123.xyz",
+  "auth.vercel.com",
+  "www.gitbook.com",
   "sky.rethinkdns.com",
   "www.speedtest.net",
   "creativecommons.org",
+  "static.cloudflareinsights.com",
   "188.114.99.220",
   "188.114.99.179",
   "188.114.99.59",
