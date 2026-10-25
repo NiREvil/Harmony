@@ -55,30 +55,30 @@
 ## 2. شخصی‌سازی اسکریپت
 ### دانلود اسکریپت
 
-ابتدا اسکریپت هارمونی را کپی یا دانلود کنید. [^2]  
+ابتدا اسکریپت هارمونی را کپی یا دانلود کنید. [^1]  
 [worker.js](./worker.js)
 
-این اسکریپت را می‌توان توسط [^3] `Notepad++` در ویندوز یا ابزارهای مدیریت فایل مانند [^4] `MT Manager` در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلودفلر ایجاد کرده و این کد را داخل آن جایگذاری و سپس اقدام به ویرایش آن کنید.
+این اسکریپت را می‌توان توسط [^2] `Notepad++` در ویندوز یا ابزارهای مدیریت فایل مانند [^3] `MT Manager` در اندروید و یا در داخل ویرایش‌گر گیت‌هاب و ... ویرایش کرد. در صورت دسترسی نداشتن به هیچ‌کدام، ابتدا وورکر جدید کلودفلر ایجاد کرده و این کد را داخل آن جای‌گذاری و سپس اقدام به ویرایش کنید.
 
 ### ویرایش UUID
 
-در ابتدای کد، `UUID` پیش‌فرض در لاین `32` را با UUID خود (از داخل کانفیگی که تازه ساختید یا از قبل داشتید) جایگزین کنید.
+در ابتدای کد در تابع `User_Settings` در بخش `groups` در هر سه گروه "UUID" کانفیگ های خود را قرار دهید. به عبارتی در لاین [83] و [100] و [117].
 
 ### ویرایش HostName
 
-در این مرحله از ویرایش کد، باید ادرس هاست کانفیگ خود را با `hostname` پیش‌فرض کد در سه بخش مختلف جایگزین کنید.
+در این مرحله از ویرایش کد، باید آدرس هاست کانفیگ خود را با `hostname` پیش‌فرض کد در سه بخش مختلف جایگزین کنید.
 
 **دسته‌ی اول کانفیگ‌های TLS**  
-- Host: line [55]
-- SNI: line [56]
+- Host: line [84]
+- SNI: line [85]
 
 **دسته دوم کانفیگ‌های TCP**   
-- Host: line [69]
-- SNI: line [x]
+- Host: line [101]
+- SNI: line [102]
 
 **دسته سوم کانفیگ‌های اضطراری**  
-- Host: line [83]
-- SNI: line [84]
+- Host: line [118]
+- SNI: line [119]
 
 **نکته:** در کانفیگ‌هایی که با وورکر یا پیج به میزبانی کلادفلر ساخته می‌شوند پارامتر SNI همان Hostname می‌باشد.
 
@@ -91,12 +91,14 @@
 ## 3. ساخت Worker
 
 1. وارد داشبورد حساب Cloudflare شوید.
-2. در نوار ابزار بالای سایت روی آیکون "Add" (در موبایل آیکون "+") کلیک کرده سپس "Workers" را انتخاب کنید.
+2. در نوار ابزار بالای سایت روی آیکون "Add" (در موبایل آیکون "+") کلیک کرده سپس "Workers" را انتخاب کنید. [لینک مستقیم ورود به بخش وورکر‌ها][2]  
 3. روی گزینه Get Start در مقابل "Start with Hello World!" کلیک کرده و سپس یک نام دلخواه برای ورکر خود انتخاب کنید. سپس Deploy را بزنید.
 4. پس از اتمام ساخت وورکر روی Edit code کلیک کنید.
 5. قبل از هرکاری؛ کد پیش‌فرض `hello world` داخل وورکر رو کامل حذف کنید، سپس برای انجام عمل جایگذاری کد در pc می‌تونید از کلید‌های ترکیبی`ctrl+v` روی کی‌بورد استفاده کنید، و در موبایل برای جلوگیری از بهم ریختگی کد باید حتما فایل وورکر رو دانلود کرده سپس در محیط ویرایش‌گر کلودفلر آپلود کنید. کافیه اول روی آیکون Explorer سمت چپ کلیک کنید تا منو باز بشه سپس توی یک فضای خالی چند لحظه دستتون رو نگه‌دارید تا گزینه‌ها بالا بیان تا بتونید آپلود رو انتخاب کنید.
 
-- **نکته:** این یادتون نره که همیشه همیشه فایلی که می‌خوایم باهاش وورکر بسازیم باید اسمش `worker.js` هست بدون چیز اضافه‌ای، ولی وقتی می‌خوایم pages بسازیم باید اسم فایل حتما `_worker.js` باشه.
+- **نکته:** این یادتون نره که همیشه همیشه فایلی که می‌خوایم باهاش وورکر بسازیم باید اسمش `worker.js` باشه بدون چیز اضافه‌ای، ولی وقتی می‌خوایم pages بسازیم باید اسم فایل حتما  
+  `_worker.js`  
+ باشه.  
 
 > [!NOTE]
 >
@@ -127,7 +129,8 @@
 
 از بخش آدرس بار مرورگر لینک آدرس را کپی کرده و از آن به عنوان لینک ساب در کلاینت دلخواه خود استفاده کنید. در تمام کلاینت‌های با هسته سینگ‌باکس و Xray می‌توان آنرا وارد کرد.
 
-این URL به عنوان لینک اشتراک شما عمل خواهد کرد.
+این URL به عنوان لینک اشتراک شما عمل خواهد کرد. 
+به صورت خودکار از طریق `User-agent` موجود داخل درخواست، نوع کلاینت را شناسایی کرده و کانفیگ‌های متناسب با آن کلاینت‌ را ارائه خواهد کرد.  
 
 <br/>
 
@@ -139,23 +142,12 @@
 
 <br><br/>
 
-> [!CAUTION]
->
-> برای شخصی‌سازی بیشتر، لطفاً توضیحات زیر را بخوانید.
->
-> <br/>
->
-> 
-> <br/>
-
 <div dir="rtl">
 
-<br><br/>
-
 <details>
-<summary><strong>📦 توضیحات غیرضروری</strong></summary>
+<summary><strong>📦 برای شخصی‌سازی بیشتر لطفا توضیحات غیرضروری را در ادامه بخوانید</strong></summary> <br/>	 
 
-قبل‌تر گفتم واسه‌ی اینکه بتونیم شخصا از این اسکریپت استفاده کنیم، باید UUID و Hostname خودمون‌رو در لاین‌های ذکر شده در ابتدای کد جای‌گذاری کنیم. حالا می‌خوام یکم بیشتر شخصی‌سازی کنیم بر حسب نیاز.
+قبل‌تر گفتم واسه‌ی اینکه بتونیم شخصا از این اسکریپت استفاده کنیم، باید UUID و Hostname خودمون‌رو در لاین‌های ذکر شده در ابتدای کد جای‌گذاری کنیم. حالا هدف اینه که برحسب نیازمون یکم بیشتر شخصی‌سازی کنیم.
 
 <br/>
 
@@ -167,58 +159,58 @@
 
 ### مخزن اول
 
-که داخل کد در لاین [976] با اسم `dinamic1` نوشته شده درواقع آی‌پی‌تمیزهای کلادفلری هستن که اسکنر آی‌پی داخل [گیت‌هاب][5] خودمون هر سه چهارساعت یک‌بار اسکن و لیست می‌کنه، هارمونی‌هم میاد از همونجا یه مشت IPv4/IPv6 برمی‌داره داخل کانفیگ‌ها قرار میده هروقت که شما توی کلاینت روی گزینه آپدیت کلیک می‌کنید.
+که داخل کد در لاین [137] با اسم `dinamic1` نوشته شده درواقع آی‌پی‌تمیزهای کلادفلری هستن که اسکنر آی‌پی داخل گیت‌هاب [^4] خودمون هر سه چهارساعت یک‌بار اسکن و لیست می‌کنه، هارمونی‌هم میاد از همونجا یه مشت IPv4/IPv6 برمی‌داره داخل کانفیگ‌ها قرار میده هروقت که شما توی کلاینت روی گزینه آپدیت کلیک می‌کنید.
 
 <br/>
 
 ### مخزن دوم
 
-مخزن دوم زیر مخزن اول یعنی در لاین [977] نوشته شده با اسم `dinamic2` که این‌هم باز دوباره واسه خودمونه، یه [Api ساده][6] برای فچ کردن آی‌پی کلادفلر از چند‌جای مختلف هستش.
+مخزن دوم زیر مخزن اول یعنی در لاین [141] نوشته شده با اسم `dinamic2` که این‌هم باز دوباره واسه خودمونه، یه Api ساده [^5] برای فچ کردن آی‌پی کلودفلر از چند‌جای مختلف هستش.
 
 <br/>
 
 ### مخزن سوم
 
-در واقع آی‌پی‌هایی هستن که داخل کد hardcode شدن، با اسم `staticIPs` و نقش fallback رو دارن واسه مواقعی که اینترنتمون اونقدرا خوب نیست که بتونه از مخزن اول و دوم آی‌پی بگیره، از لاین [102] شروع میشن تا لاین [718] آی‌پی ورژن 6 هستن.
+در واقع آی‌پی‌هایی هستن که در انتهای کد hardcode شدن، با اسم `staticIPs` و نقش fallback رو دارن واسه مواقعی که اینترنتمون اونقدرا خوب نیست که بتونه از مخزن اول و دوم آی‌پی بگیره، از لاین [366] شروع میشن تا لاین [982] آی‌پی ورژن 6 هستن.
 
-از ابتدای لاین [720] یه سری دامنه‌های پشت کلادفلر رو قرار دادم اونایی که عموما واسه همه خوب کار می‌کردن و پشت سر اوناهم یه چندتا آی‌پی ورژن 4 عادی نوشتم تااااا لاین [971].  
-تمام آی‌پی‌ و دامنه‌های این مخزن و دوتای قبلی رو می‌تونید به دلخواه خودتون عوض کنید ولی پیشنهاد نمی‌کنم که مخزن یک و دو رو تغییر بدید، چون قطعا بهتر از اینا پیدا نمی‌کنید هیچ‌کجا.
+از ابتدای لاین [984] یه سری دامنه‌های پشت کلادفلر رو قرار دادم اونایی که عموما واسه همه خوب کار می‌کردن و پشت سر اوناهم تعدادی آی‌پی ورژن 4 عادی نوشتم تااااا آخربن سطر کد یعنی لاین [1423].  
+تمام آی‌پی‌ و دامنه‌های این مخزن و دوتای قبلی رو می‌تونید به دلخواه خودتون عوض کنید ولی پیشنهاد نمی‌کنم که مخزن یک و دو رو تغییر بدید، چون قطعا بهتر از اینا پیدا نخواهید کرد هیچ‌کجا.
 
 <br/>
 
 ## 2. Remark
 
-کانفیگ‌ها ده تا ده تا نام‌گذاری میشن، از لاین [54] می‌تونید نام کانفیگ‌هایی که با آی‌پی‌های dinamic1 ساخته شدن رو تعیین کنید، پیش‌فرض `Harmonyᵀᴸˢ` هستن، و از لاین [68] کانفیگ‌های ساخته شده با آی‌پی‌های dinamic2 با اسم `Harmonyᵀᶜᴾ` قرار دارن (اینارو دیگه مثل دسته قبلی tls نکردیم که بشه از پورت‌های بدون tls هم استفاد کرد)، و از لاین [82] دسته‌ی آخر یعنی `Harmonyᴱᴹˢ` ها شروع میشن که ایناهم tls هستن و با آی‌پی‌های استاتیک هاردکد ساخته شدن، به دلخواه می‌تونید Remark کنید همه‌رو.
+کانفیگ‌ها ده تا ده تا نام‌گذاری میشن، از لاین [82] می‌تونید نام کانفیگ‌هایی که با آی‌پی‌های dinamic1 ساخته شدن رو تعیین کنید، پیش‌فرض `Harmonyᵀᴸˢ` هستن، و از لاین [99] کانفیگ‌های ساخته شده با آی‌پی‌های dinamic2 با اسم `Harmonyᵀᶜᴾ` قرار دارن (اینارو دیگه مثل دسته قبلی tls نکردیم که بشه از پورت‌های بدون tls هم استفاد کرد)، و از لاین [116] دسته‌ی آخر یعنی `Harmonyᴱᴹˢ` ها شروع میشن که ایناهم tls هستن و با آی‌پی‌های استاتیک هاردکد ساخته شدن، به دلخواه می‌تونید Remark کنید همه‌رو.
 
 <br/>
 
 ### 3. alpn type
 
-از لاین‌های [61] و [75] و [89] میشه نوع `alpn` رو تغییر داد برای هر دسته. من پیش‌فرض همه رو `http/1.1` قرار دادم چون ما از کانفیگ‌های نوع `vless-ws-tls` داخل هارمونی اسنفاده می‌کنیم و از اون‌جایی که وب‌سوکت تنها همینو ساپورت می‌کنه، استفاده کردن از `h2` و `h3` عملا بی‌فایده‌است.
+از لاین‌های [92] و [109] و [126] میشه نوع `alpn` رو تغییر داد برای هر دسته. من پیش‌فرض همه رو `http/1.1` قرار دادم چون ما از کانفیگ‌های نوع `vless-ws-tls` داخل هارمونی اسنفاده می‌کنیم و از اون‌جایی که وب‌سوکت تنها همینو ساپورت می‌کنه، استفاده کردن از `h2` و `h3` عملا بی‌فایده‌است چون تهش فالبک میشه رو همین http/1.1، ولی اکه کانفیگاتون روی وورکر و پیج ساخته نشدن می‌تونید راحت تغییر بدید. 
 
 <br/>
 
 ## 4. Path & Max early data
 
-از لاین [57] و [71] و [85] مقدار `path` قابل تغییره، هر اسمی، هر کلمه‌ای، جمله‌ای که خواستی بدون فاصله با حروف بزرگ و کوچیک می‌تونید قرار بدید، از یک الی 64 کاراکتر ممکنه. من پیشفرض تعیین کردم کاراکترهای رندوم ایجاد بشه.
+از لاین [86] و [103] و [120] مقدار `path` قابل تغییره، هر اسمی، هر کلمه‌ای، جمله‌ای که خواستی بدون فاصله با حروف بزرگ و کوچیک می‌تونید قرار بدید، از یک الی 64 کاراکتر ممکنه. من پیشفرض تعیین کردم کاراکترهای رندوم ایجاد بشه.
 
-لاین [37] از کد Max Early Data headers & Name توضیحش یکم سخته فقط اینو بگم که بذارید همین `2560` بمونه، می‌تونید به هر عددی نزدیک به ابن هم تغییرش بدید ولی بهتره که نکنید. قبلا [اینجا][max] یکم توضیح دادم دربارش.
+لاین [64] و [65] از کد Max Early Data headers & Name توضیحش یکم سخته فقط اینو بگم که بذارید همین `2560` بمونه، می‌تونید به هر عددی نزدیک به ابن هم تغییرش بدید ولی بهتره که نکنید. قبلا [اینجا][max] یکم توضیح دادم دربارش.
 
 <br/>
 
 ## 5. Fingerprints
 
-لاین‌های [62] و [76] و [90] مربوط به fingerprints هستن، موقتا فقط chrome روی کانفیگ‌های وورکری کار می‌کنه واسه همینم به این یدونه محدودش کردم، در آینده‌ که این مشکل برطرف شده بود لیست کامل‌تری از فینگرپرینت‌های دلخواهتون بنویسید مثل:
+لاین‌های [93] و [110] و [127] مربوط به fingerprints هستن، تا چند وقت پیش فقط و فقط با chrome روی کانفیگ‌های وورکری کار می‌کردن ولی الان ظاهرا بجز `randomized` با بقیه اوکی هستن، ولی اگر این لاین‌هارو نگاه کنید من مقدارشون رو برابر با `unsafe` قرار دادم چون تو اپدیت اخیر پارامترهای پترنی‌ها یعنی final mask و cypher suites رو اضافه کردیم و اینا فقط با unsafe کار میکنن برای همین یه شرط گذاشتم که اگه کلاینت v2rayNG یا PattNG بود خب قطعا فینگرپرینت رو unsafe قرار بده و اگه کلاینت غیر از این دوتا بود رندوم یکی از لیست موجود در لاین [67] انتخاب کن. می‌تونید به دلخواه مقادیر داخل لیست رو کم و زیاد کنید.  
 
 ```rust
-fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
+fallbackFp: ["chrome", "firefox", "safari", "edge", "ios", "android", "360", "qq"],
 ```
 
 <br/>
 
 ## 6. Ports
 
-لاین‌های [60] و [74] و [88] از کد، پورت‌های پیش‌فرض کلادفلر رو مشخص می‌کنن، شما می‌تونید هرکدوم از پورت‌های دیگه رو تعیین کنید نسبت به نوع کانفیگ خودتون، اگه کانفیگتون ساخته شده با pages باشه فقط میشه از پورت‌های HTTPS یا همون TLS استفاده کنید ولی اگه کانفیگتون ساخته شده با workers باشه می‌تونید هم از پورت‌های TLS و هم TCP استفاده کنید.
+لاین‌های [91] و [108] و [125] از کد، پورت‌های پیش‌فرض کلادفلر رو مشخص می‌کنن، شما می‌تونید هرکدوم از پورت‌های دیگه رو تعیین کنید نسبت به نوع کانفیگ خودتون، اگه کانفیگتون ساخته شده با pages باشه فقط میشه از پورت‌های HTTPS یا همون TLS استفاده کنید ولی اگه کانفیگتون ساخته شده با workers باشه می‌تونید هم از پورت‌های TLS و هم TCP استفاده کنید.
 
 > [!TIP]
 >
@@ -237,13 +229,29 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 ## 7. uniqueIPs.size >= 10
 
 سه تا مخزن آی‌پی داشتیم که از هرکدوم ده تا کانفیگ می‌ساخت و بهمون تحویل می‌داد در مجموع سی تا کانفیگ، کی تعیین کرد سی تارو؟ خودمون :)  
-از لاین [35] تعداد کانفیگ‌های ساخته شده در هر دسته رو میشه تعیین کرد.
+از لاین [61] تعداد کانفیگ‌های ساخته شده در هر دسته رو میشه تعیین کرد.
 
 <br/>
 
 ## 8. Merging
 
-و آخرین نکته، گفتم که سه تا دسته 10 تایی کانفیگ داریم تو خروجی این کد، می‌تونید واسه هر دسته یه کانفیگ متفاوت قرار بدید، مثلا واسه دسته اول Host و SNI از کانفیگی که با کد BPB ساختید واسه دسته دوم هاست و sni کانفیگی که با کد فرضا Edtunnel ساختید رو قرار بدید و واسه دسته سوم هر هاست‌نیم و sni کانفیگ دیگه ای رو، ولی به یک شرط، به شرطی که واسه همه‌ی این سه تا از یک UUID استفاده کرده باشید، UUID همشون باید مشترک باشه و همونم تو لاین [32] کد قرار داشته باشه.  
+و آخرین نکته، گفتم که سه تا دسته 10 تایی کانفیگ داریم تو خروجی این کد، می‌تونید واسه هر دسته یه کانفیگ متفاوت قرار بدید، مثلا واسه دسته اول host و sni و uuid و ... از کانفیگی که با کد BPB ساختید واسه دسته دوم host و sni و uuid کانفیگی که با کد فرضا Edgetunnel ساختید رو قرار بدید و واسه دسته سوم هر هاست‌نیم و sni و غیره کانفیگ دیگه‌ای رو.
+
+
+## 9. Final Mask & Cypher suites
+  
+اخیراً [پترنی‌ها][7] برای رفع اختلال‌ها و قطع و وصلی‌های پیاپی (به‌خاطر وضعیت کصشعر اینترنت ایران) و همچنین رفع مشکل پایین بودن سرعت آپلود تو کانفیگ‌های ساخته‌شده با وورکر کلودفلر، پیشنهاد دادن که دو پارامتر به کانفیگ‌ها اضافه کنیم:  
+- Final Mask  
+- Cipher suites  
+
+برای اینکه عملکرد کانفیگ‌ها هرچه بهتر بشه، یه فورک از v2rayNG با اسم PattNG هم رو گیت‌هاب خودشون منتشر کردن. برای همین ماهم برای کانفیگ‌ها این پارامتر‌هارو اضافه کردیم، که اکه کلاینت pattng یا v2rayNG شناسایی شد کاتفیگ‌ها شامل این پارامترها باشن، اگه exclave و nekobox و غیره بود فقط کانفیگ‌های معمولی اضافه میشن، مقادیر این پارمترها رو می‌تونید از ابتدای کد در لاین [40] برای final mask و در لاین [53] برای cypher suites رو تغییر بدید، همچنین می‌تونید از داخل هر سه گروه با تغییر مقدار `fm` و `cs` به `false` اون‌هارو کلا حذف کنید.
+
+
+پیشنهاد میشه برای استفاده روتین به‌جای کلاینت v2rayNG از کلاینت PattNG استفاده کنید، می‌تونید فایل‌های نصبی رو از مخزن گیت‌هاب خودشون دانلود کنید، [لینک گیت‌هاب PattNG][8]
+
+<br/>
+
+
 
 **[توضیحات بیشتر برای علاقه‌مندان، خیلی بیشتر][docs]** 🤪  
 
@@ -256,59 +264,69 @@ fp: ["chrome", "randomized", "firefox", "safari", "edge", "example"],
 
 <br/>
 
-[^1]: [UUID Generator](https://www.uuidgenerator.net/)
+[^1]: [Worker.js](./worker.js)
 
-[^2]: [Worker.js](./worker.js)
+[^2]: [Get Notepad++][3]
 
-[^3]: [Get Notepad++](https://notepad-plus-plus.org/downloads/)
+[^3]: [Get MT Manager][4]
 
-[^4]: [Get MT Manager](https://t.me/mtmanager/391)
+[^4]: [REvil cleanIPs][5]
 
-[^5]: [REvil cleanIPs](https://github.com/NiREvil/vless/blob/main/Cloudflare-IPs.json)
+[^5]: [Strawberry API][6]
 
-[^6]: [github.com NiREvil](https://raw.githubusercontent.com/NiREvil/Harmony/refs/heads/main/cf-clean.json)
-
-[ZiZifn]: https://github.com/zizifn/edgetunnel
-[Harmony]: https://github.com/NiREvil/Harmony
-[NiREvil]: https://github.com/NiREvil/
-[ZiF]: https://github.com/NiREvil/zizifn
-[BPB]: https://github.com/bia-pain-bache/BPB-Worker-Panel
-[CMLIU]: https://github.com/cmliu/edgetunnel
-[max]: https://t.me/NiREvil_GP/198128
-[docs]: https://nirevil.github.io/Harmony
-[2]: https://www.uuidgenerator.net
-[3]: https://github.com/NiREvil/vless/blob/main/sub/ProxyIP.md
-[4]: https://scamalytics.com/ip/api/enquiry?monthly_api_calls=5000
+[1]: https://www.uuidgenerator.net
+[2]: https://dash.cloudflare.com/?to=/:account/workers-and-pages
+[3]: https://notepad-plus-plus.org/downloads
+[4]: https://t.me/mtmanager/411
 [5]: https://github.com/NiREvil/vless/blob/main/Cloudflare-IPs.json
 [6]: https://strawberry.victoriacross.ir
-[32]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L32
-[35]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L35
-[37]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L37
-[54]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L54
-[55]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L55
-[56]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L56
-[57]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L57
-[60]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L60
+[7]: https://t.me/patt_channel_x/93
+[8]: https://github.com/patterniha/v2rayNG/releases
+[9]: https://github.com/NiREvil/vless/blob/main/sub/ProxyIP.md
+[10]: https://scamalytics.com/ip/api/enquiry?monthly_api_calls=5000
+
+[ZiF]: https://github.com/NiREvil/zizifn
+[BPB]: https://github.com/bia-pain-bache/BPB-Worker-Panel
+[max]: https://t.me/NiREvil_GP/198128
+[docs]: https://nirevil.github.io/Harmony
+[ZiZifn]: https://github.com/zizifn/edgetunnel
+[CMLIU]: https://github.com/cmliu/edgetunnel
+[NiREvil]: https://github.com/NiREvil
+[Harmony]: https://github.com/NiREvil/Harmony
+
+[40]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L40
+[53]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L53
 [61]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L61
-[62]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L62
-[68]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L68
-[69]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L69
-[x]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L70
-[71]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L71
-[74]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L74
-[75]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L75
-[76]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L76
+[64]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L64
+[65]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L65
+[67]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L67
 [82]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L82
 [83]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L83
 [84]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L84
 [85]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L85
-[88]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L88
-[89]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L89
-[90]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L90
+[86]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L86
+[91]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L91
+[92]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L92
+[93]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L93
+[99]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L99
+[100]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L100
+[101]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L101
 [102]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L102
-[718]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L718
-[720]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L720
-[971]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L971
-[976]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L976
-[977]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L977
-
+[103]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L103
+[108]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L108
+[109]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L109
+[110]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L110
+[116]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L116
+[117]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L117
+[118]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L118
+[119]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L119
+[120]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L120
+[125]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L125
+[126]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L126
+[127]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L127
+[137]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L137
+[141]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L141
+[366]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L366
+[982]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L982
+[984]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L984
+[1423]: https://github.com/NiREvil/Harmony/blob/8ae1f9fc7c67577291a42aeb67063e0d374a0901/worker.js#L1423
