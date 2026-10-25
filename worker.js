@@ -12,7 +12,7 @@
  * 3. Replace the values in USER_SETTINGS object:
  *    - UUID in (lines 83, 100 and 117)
  *    - Hostname in each group's "host" parameter (lines 84, 101 and 118)
- *    - SNI in each group's "sni" parameter (lines 84, 102 and 119)
+ *    - SNI in each group's "sni" parameter (lines 85, 102 and 119)
  * 4. Deploy this worker and use the worker URL as your subscription link
  * 5. Every time you click "Update" in your client, fresh clean IPs are automatically injected
  *
